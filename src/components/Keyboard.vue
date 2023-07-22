@@ -32,16 +32,16 @@ const keys = [
   { key: '\\&nbsp;&nbsp;|', style: 'width: ' + normal_key_width },
   { key: 'caps lock', style: 'margin-left:0; width:108px' },
   { key: 'A', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: ';', style: 'width: ' + normal_key_width },
-  { key: "'", style: 'width: ' + normal_key_width },
+  { key: 'S', style: 'width: ' + normal_key_width },
+  { key: 'D', style: 'width: ' + normal_key_width },
+  { key: 'F', style: 'width: ' + normal_key_width },
+  { key: 'G', style: 'width: ' + normal_key_width },
+  { key: 'H', style: 'width: ' + normal_key_width },
+  { key: 'J', style: 'width: ' + normal_key_width },
+  { key: 'K', style: 'width: ' + normal_key_width },
+  { key: 'L', style: 'width: ' + normal_key_width },
+  { key: ';&nbsp;&nbsp;:', style: 'width: ' + normal_key_width },
+  { key: "'&nbsp;&nbsp;\"", style: 'width: ' + normal_key_width },
   { key: 'return', style: 'width: 108px' },
   { key: 'shift', style: 'margin-left:0;width: 147px' },
   { key: 'Z', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
@@ -51,8 +51,8 @@ const keys = [
   { key: 'B', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
   { key: 'N', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
   { key: 'M', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: ',', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: '.', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
+  { key: ',&nbsp;&nbsp;<', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
+  { key: '.&nbsp;&nbsp;>', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
   { key: '/&nbsp;&nbsp;?', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
   { key: '↑', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
   { key: 'shift', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
@@ -71,7 +71,7 @@ const keys = [
 <template>
   <div class="keyboard">
     <div v-for="k in keys" class="key" :style="k.style">
-      <span v-html="k.key"></span>
+      <span class="noselect" v-html="k.key"></span>
     </div>
   </div>
 </template>
