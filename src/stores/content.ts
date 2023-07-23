@@ -2,12 +2,11 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useContentStore = defineStore('content', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
+  const origin_content = ref('')
 
-  function increment() {
-    count.value++
+  function submit(str: string) {
+    origin_content.value = str
   }
 
-  return { count, doubleCount, increment }
+  return { origin_content, submit }
 })

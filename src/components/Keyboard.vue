@@ -77,11 +77,6 @@ const keys = [
     </div>
   </div>
 </template>
-<style>
-html {
-  font-size: 22px;
-}
-</style>
 <style scoped>
 .keyboard-wrap {
   background-color: #f0f0f0;

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import HomeInput from './components/HomeInput.vue'
-import Keyboard from './components/Keyboard.vue'
+import Header from './views/Header.vue'
 </script>
 <template>
-  <HomeInput></HomeInput>
-  <!-- <Keyboard /> -->
+  <Header></Header>
+  <RouterView />
 </template>
 <style scoped></style>
