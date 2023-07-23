@@ -41,7 +41,7 @@ const keys = [
   { key: 'K', style: 'width: ' + normal_key_width },
   { key: 'L', style: 'width: ' + normal_key_width },
   { key: ';&nbsp;&nbsp;:', style: 'width: ' + normal_key_width },
-  { key: "'&nbsp;&nbsp;\"", style: 'width: ' + normal_key_width },
+  { key: '\'&nbsp;&nbsp;"', style: 'width: ' + normal_key_width },
   { key: 'return', style: 'width: 108px' },
   { key: 'shift', style: 'margin-left:0;width: 147px' },
   { key: 'Z', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
@@ -69,9 +69,11 @@ const keys = [
 ]
 </script>
 <template>
-  <div class="keyboard">
-    <div v-for="k in keys" class="key" :style="k.style">
-      <span class="noselect" v-html="k.key"></span>
+  <div class="fixed w-full bg-neutral-100 bottom-0">
+    <div class="keyboard">
+      <div v-for="k in keys" class="key" :style="k.style">
+        <span class="noselect" v-html="k.key"></span>
+      </div>
     </div>
   </div>
 </template>
