@@ -137,7 +137,7 @@ for (let key of keys) {
 }
 
 .key {
-  @apply bg-neutral-100 shadow-md shadow-neutral-700;
+  @apply bg-neutral-100 border-2 border-neutral-100 shadow-md shadow-neutral-700;
   text-align: center;
   height: 55px;
   padding-top: 5px;
@@ -147,6 +147,6 @@ for (let key of keys) {
 }
 
 .keydown {
-  @apply border-2 border-neutral-100 shadow-none;
+  @apply shadow-sm shadow-neutral-700;
 }
 </style>

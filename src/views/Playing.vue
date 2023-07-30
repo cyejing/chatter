@@ -22,7 +22,7 @@ function keyHandle(ev: KeyboardEvent) {
 }
 </script>
 <template>
-  <ContentDisplay :event="event"></ContentDisplay>
+  <ContentDisplay></ContentDisplay>
   <Keyboard :event="event"></Keyboard>
 </template>
 <style scoped></style>
