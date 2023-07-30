@@ -1,4 +1,25 @@
 <script setup lang="ts">
+import { Ref, ref, watch } from 'vue'
+
+const props = defineProps(['event'])
+
+interface KeyState {
+  state: Ref<string>
+  keyStr: string
+  keyCode: number
+}
+
+watch(props, (ev) => {
+  let keyState = keyMap[ev.event.keyCode]
+  if (keyState != undefined) {
+    keyState.state.value = ev.event.type
+  }
+})
+
+function isKeydown(keyState: KeyState | undefined) {
+  return keyState != undefined && keyState.state.value === 'keydown'
+}
+
 const normal_key_width = '57px;'
 const last_margin = '15px;'
 const keys = [
@@ -17,8 +38,17 @@ const keys = [
   { key: '=&nbsp;&nbsp;+', style: 'margin-top:0;width: ' + normal_key_width },
   { key: 'delete', style: 'margin-top:0;width: 88px' },
   { key: 'tab', style: 'margin-left:0; width: 88px' },
-  { key: 'Q', style: 'width: ' + normal_key_width },
-  { key: 'W', style: 'width: ' + normal_key_width },
+  {
+    keyState: { state: ref(''), keyStr: 'q', keyCode: 81 },
+    key: 'Q',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 87 },
+    keyStr: 'w',
+    key: 'W',
+    style: 'width: ' + normal_key_width
+  },
   { key: 'E', style: 'width: ' + normal_key_width },
   { key: 'R', style: 'width: ' + normal_key_width },
   { key: 'T', style: 'width: ' + normal_key_width },
@@ -67,11 +97,18 @@ const keys = [
   { key: '↓', style: 'width: ' + normal_key_width },
   { key: '→', style: 'width: ' + normal_key_width }
 ]
+
+const keyMap: { [index: number]: KeyState } = {}
+for (let key of keys) {
+  if (key.keyState) {
+    keyMap[key.keyState.keyCode] = key.keyState
+  }
+}
 </script>
 <template>
   <div class="fixed w-full bg-neutral-100 bottom-0">
     <div class="keyboard">
-      <div v-for="k in keys" class="key" :style="k.style">
+      <div v-for="k in keys" class="key" :class="{ keydown: isKeydown(k.keyState) }" :style="k.style">
         <span class="noselect" v-html="k.key"></span>
       </div>
     </div>
@@ -100,7 +137,6 @@ const keys = [
 }
 
 .key {
-  /* background-color: #ebebeb; */
   @apply bg-neutral-100 shadow-md shadow-neutral-700;
   text-align: center;
   height: 55px;
@@ -108,5 +144,9 @@ const keys = [
   margin-left: 14px;
   margin-top: 9px;
   border-radius: 0.2rem;
+}
+
+.keydown {
+  @apply border-2 border-neutral-100 shadow-none;
 }
 </style>
