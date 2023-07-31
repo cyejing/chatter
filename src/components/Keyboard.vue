@@ -10,7 +10,11 @@ interface KeyState {
 }
 
 watch(props, (ev) => {
+  console.log('key:', ev.event.key, ', keyCode:', ev.event.keyCode, ev.event)
   let keyState = keyMap[ev.event.keyCode]
+  if (keyState == undefined) {
+    keyState = keyMap[ev.event.keyCode + ev.event.code]
+  }
   if (keyState != undefined) {
     keyState.state.value = ev.event.type
   }
@@ -23,21 +27,81 @@ function isKeydown(keyState: KeyState | undefined) {
 const normal_key_width = '57px;'
 const last_margin = '15px;'
 const keys = [
-  { key: 'esc', style: 'margin-top:0; margin-left:0; width: ' + normal_key_width },
-  { key: '1&nbsp;&nbsp;!', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '2&nbsp;&nbsp;@', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '3&nbsp;&nbsp;#', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '4&nbsp;&nbsp;$', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '5&nbsp;&nbsp;%', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '6&nbsp;&nbsp;^', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '7&nbsp;&nbsp;&', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '8&nbsp;&nbsp;*', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '9&nbsp;&nbsp;(', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '0&nbsp;&nbsp;)', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '-&nbsp;&nbsp;_', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: '=&nbsp;&nbsp;+', style: 'margin-top:0;width: ' + normal_key_width },
-  { key: 'delete', style: 'margin-top:0;width: 88px' },
-  { key: 'tab', style: 'margin-left:0; width: 88px' },
+  {
+    keyState: { state: ref(''), keyStr: 'esc', keyCode: 27 },
+    key: 'esc',
+    style: 'margin-top:0; margin-left:0; width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '1', keyCode: 49 },
+    key: '1&nbsp;&nbsp;!',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 50 },
+    key: '2&nbsp;&nbsp;@',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 51 },
+    key: '3&nbsp;&nbsp;#',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 52 },
+    key: '4&nbsp;&nbsp;$',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 53 },
+    key: '5&nbsp;&nbsp;%',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 54 },
+    key: '6&nbsp;&nbsp;^',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 55 },
+    key: '7&nbsp;&nbsp;&',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 56 },
+    key: '8&nbsp;&nbsp;*',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 57 },
+    key: '9&nbsp;&nbsp;(',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 48 },
+    key: '0&nbsp;&nbsp;)',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 189 },
+    key: '-&nbsp;&nbsp;_',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 187 },
+    key: '=&nbsp;&nbsp;+',
+    style: 'margin-top:0;width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 8 },
+    key: 'delete',
+    style: 'margin-top:0;width: 88px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: '2', keyCode: 9 },
+    key: 'tab',
+    style: 'margin-left:0; width: 88px'
+  },
   {
     keyState: { state: ref(''), keyStr: 'q', keyCode: 81 },
     key: 'Q',
@@ -49,59 +113,250 @@ const keys = [
     key: 'W',
     style: 'width: ' + normal_key_width
   },
-  { key: 'E', style: 'width: ' + normal_key_width },
-  { key: 'R', style: 'width: ' + normal_key_width },
-  { key: 'T', style: 'width: ' + normal_key_width },
-  { key: 'Y', style: 'width: ' + normal_key_width },
-  { key: 'U', style: 'width: ' + normal_key_width },
-  { key: 'I', style: 'width: ' + normal_key_width },
-  { key: 'O', style: 'width: ' + normal_key_width },
-  { key: 'P', style: 'width: ' + normal_key_width },
-  { key: '[&nbsp;&nbsp;{', style: 'width: ' + normal_key_width },
-  { key: ']&nbsp;&nbsp;}', style: 'width: ' + normal_key_width },
-  { key: '\\&nbsp;&nbsp;|', style: 'width: ' + normal_key_width },
-  { key: 'caps lock', style: 'margin-left:0; width:108px' },
-  { key: 'A', style: 'width: ' + normal_key_width },
-  { key: 'S', style: 'width: ' + normal_key_width },
-  { key: 'D', style: 'width: ' + normal_key_width },
-  { key: 'F', style: 'width: ' + normal_key_width },
-  { key: 'G', style: 'width: ' + normal_key_width },
-  { key: 'H', style: 'width: ' + normal_key_width },
-  { key: 'J', style: 'width: ' + normal_key_width },
-  { key: 'K', style: 'width: ' + normal_key_width },
-  { key: 'L', style: 'width: ' + normal_key_width },
-  { key: ';&nbsp;&nbsp;:', style: 'width: ' + normal_key_width },
-  { key: '\'&nbsp;&nbsp;"', style: 'width: ' + normal_key_width },
-  { key: 'return', style: 'width: 108px' },
-  { key: 'shift', style: 'margin-left:0;width: 147px' },
-  { key: 'Z', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'X', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'C', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'V', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'B', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'N', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'M', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: ',&nbsp;&nbsp;<', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: '.&nbsp;&nbsp;>', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: '/&nbsp;&nbsp;?', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: '↑', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'shift', style: 'margin-left:' + last_margin + 'width: ' + normal_key_width },
-  { key: 'ctrl', style: 'margin-left:0; width: 65px' },
-  { key: 'opt', style: 'width: 65px' },
-  { key: 'cmd', style: 'width: 70px' },
-  { key: 'space', style: 'width: 364px' },
-  { key: 'alt', style: 'width: 50px' },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 69 },
+    key: 'E',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 82 },
+    key: 'R',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 84 },
+    key: 'T',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 89 },
+    key: 'Y',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 85 },
+    key: 'U',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 73 },
+    key: 'I',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 79 },
+    key: 'O',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 80 },
+    key: 'P',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 219 },
+
+    key: '[&nbsp;&nbsp;{',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 221 },
+    key: ']&nbsp;&nbsp;}',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'w', keyCode: 220 },
+    key: '\\&nbsp;&nbsp;|',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'CapsLock', keyCode: 20 },
+    key: 'caps lock',
+    style: 'margin-left:0; width:108px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'a', keyCode: 65 },
+    key: 'A',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 's', keyCode: 83 },
+    key: 'S',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 68 },
+    key: 'D',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 70 },
+    key: 'F',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 71 },
+    key: 'G',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 72 },
+    key: 'H',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 74 },
+    key: 'J',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 75 },
+    key: 'K',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 76 },
+    key: 'L',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 186 },
+    key: ';&nbsp;&nbsp;:',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 222 },
+    key: '\'&nbsp;&nbsp;"',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 13 },
+    key: 'return',
+    style: 'width: 108px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'd', keyCode: 16, codeStr: 'ShiftLeft' },
+    key: 'shift',
+    style: 'margin-left:0;width: 147px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'z', keyCode: 90 },
+    key: 'Z',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'x', keyCode: 88 },
+    key: 'X',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'c', keyCode: 67 },
+    key: 'C',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'v', keyCode: 86 },
+    key: 'V',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'b', keyCode: 66 },
+    key: 'B',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'n', keyCode: 78 },
+    key: 'N',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 77 },
+    key: 'M',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 188 },
+    key: ',&nbsp;&nbsp;<',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 190 },
+    key: '.&nbsp;&nbsp;>',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 191 },
+    key: '/&nbsp;&nbsp;?',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 38 },
+    key: '↑',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 16, codeStr: 'ShiftRight' },
+    key: 'shift',
+    style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 17, codeStr: 'ControlLeft' },
+    key: 'ctrl',
+    style: 'margin-left:0; width: 65px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 18, codeStr: 'AltLeft' },
+    key: 'opt',
+    style: 'width: 65px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 91, codeStr: 'MetaLeft' },
+    key: 'cmd',
+    style: 'width: 70px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 32 },
+    key: 'space',
+    style: 'width: 364px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 18, codeStr: 'AltRight' },
+    key: 'alt',
+    style: 'width: 50px'
+  },
   { key: 'fn', style: 'width: 50px' },
-  { key: 'ctrl', style: 'width: 50px' },
-  { key: '←', style: 'width: ' + normal_key_width },
-  { key: '↓', style: 'width: ' + normal_key_width },
-  { key: '→', style: 'width: ' + normal_key_width }
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 17, codeStr: 'ControlRight' },
+    key: 'ctrl',
+    style: 'width: 50px'
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 37 },
+    key: '←',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 40 },
+    key: '↓',
+    style: 'width: ' + normal_key_width
+  },
+  {
+    keyState: { state: ref(''), keyStr: 'm', keyCode: 39 },
+    key: '→',
+    style: 'width: ' + normal_key_width
+  }
 ]
 
-const keyMap: { [index: number]: KeyState } = {}
+const keyMap: { [index: string]: KeyState } = {}
 for (let key of keys) {
   if (key.keyState) {
-    keyMap[key.keyState.keyCode] = key.keyState
+    let keyIndex
+    if (key.keyState.codeStr) {
+      keyIndex = key.keyState.keyCode + key.keyState.codeStr
+    } else {
+      keyIndex = key.keyState.keyCode
+    }
+    keyMap[keyIndex] = key.keyState
   }
 }
 </script>

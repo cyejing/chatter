@@ -18,6 +18,7 @@ onUnmounted(() => {
 })
 
 function keyHandle(ev: KeyboardEvent) {
+  ev.preventDefault()
   event.value = ev
 }
 </script>
