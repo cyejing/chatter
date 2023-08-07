@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 
 // import App from './TailwindApp.vue'
 import App from './App.vue'
+// import App from './App2.vue'
 import router from './router'
 import piniaPersist from 'pinia-plugin-persist'
 
