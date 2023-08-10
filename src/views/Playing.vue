@@ -2,7 +2,9 @@
 import Keyboard from '../components/Keyboard.vue'
 import ContentDisplay from '../components/ContentDisplay.vue'
 import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { useVirtuosoStore } from '@/stores/virtuoso'
 
+const store = useVirtuosoStore()
 const event = ref<KeyboardEvent | {}>({})
 
 onMounted(() => {
@@ -20,6 +22,9 @@ onUnmounted(() => {
 function keyHandle(ev: KeyboardEvent) {
   ev.preventDefault()
   event.value = ev
+  if (ev.type == 'keydown') {
+    store.inputChar(ev.key)
+  }
 }
 </script>
 <template>
