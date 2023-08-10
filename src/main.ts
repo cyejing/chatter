@@ -11,7 +11,7 @@ import './assets/main.css'
 
 const app = createApp(App)
 const pinia = createPinia()
-pinia.use(piniaPersist)
+// pinia.use(piniaPersist)
 
 app.use(pinia)
 app.use(router)

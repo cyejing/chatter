@@ -6,7 +6,7 @@ interface Virtuoso {
   sentences: string[][]
   sentenceIndex: number
   wordIndex: number
-  letterIndex: number
+  charIndex: number
 }
 
 export const useVirtuosoStore = defineStore(
@@ -17,8 +17,9 @@ export const useVirtuosoStore = defineStore(
       sentences: [],
       sentenceIndex: 0,
       wordIndex: 0,
-      letterIndex: 0
+      charIndex: 0
     })
+    const compWord = ref('')
 
     function currentWord() {
       let s = virtuoso.sentences[virtuoso.sentenceIndex]
@@ -27,10 +28,54 @@ export const useVirtuosoStore = defineStore(
       }
     }
 
-    function currentLetter() {
+    function currentChar() {
       let word = currentWord()
       if (word) {
-        return word[virtuoso.letterIndex]
+        return word[virtuoso.charIndex]
+      }
+    }
+
+    function inputChar(char: string) {
+      if (char == currentChar()) {
+        incIndex()
+      } else if (compWord.value && char == ' ') {
+        incIndex()
+      }
+    }
+
+    function incIndex() {
+      let word = currentWord()
+      if (!word) {
+        console.log('inc end')
+        return
+      }
+
+      // word end
+      if (virtuoso.charIndex >= word.length) {
+        compWord.value = ''
+        let s = virtuoso.sentences[virtuoso.sentenceIndex]
+        // sentence end
+        if (s && virtuoso.wordIndex + 1 >= s.length) {
+          // virtuoso end
+          if (virtuoso.sentenceIndex + 1 >= virtuoso.sentences.length) {
+            virtuoso.sentenceIndex += 1
+            virtuoso.wordIndex = 0
+            virtuoso.charIndex = 0
+            console.log('sentences is end')
+          } else {
+            virtuoso.sentenceIndex += 1
+            virtuoso.wordIndex = 0
+            virtuoso.charIndex = 0
+          }
+        } else {
+          virtuoso.wordIndex += 1
+          virtuoso.charIndex = 0
+        }
+      } else {
+        virtuoso.charIndex += 1
+        if (virtuoso.charIndex >= word.length) {
+          compWord.value = word
+        }
       }
     }
 
@@ -49,17 +94,20 @@ export const useVirtuosoStore = defineStore(
       virtuoso.sentences = []
       virtuoso.sentenceIndex = 0
       virtuoso.wordIndex = 0
-      virtuoso.letterIndex = 0
+      virtuoso.charIndex = 0
     }
 
     function splitContent(str: string) {
-      return str.split('.')
+      let sentences = str.split(/[\.\n]/g)
+      return sentences.filter((i) => i.trim().length > 0)
     }
 
     function splitSentence(str: string) {
-      return str.split(' ')
+      let words = str.split(/ /g)
+      return words.filter((i) => i.trim().length > 0)
     }
-    return { virtuoso, submit, currentWord, currentLetter }
+
+    return { virtuoso, submit, currentWord, currentChar, inputChar, compWord }
   },
   { persist: { enabled: true } }
 )
