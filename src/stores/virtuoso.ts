@@ -1,4 +1,4 @@
-import { ref, computed, reactive, Ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 interface Virtuoso {
@@ -106,8 +106,7 @@ export const useVirtuosoStore = defineStore(
       let words = str.split(/ /g)
       return words.filter((i) => i.trim().length > 0)
     }
-
     return { virtuoso, submit, currentWord, currentChar, inputChar, compWord }
   },
-  { persist: { enabled: true } }
+  { persist: true }
 )

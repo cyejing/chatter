@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useVirtuosoStore } from '@/stores/virtuoso'
-import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 const store = useVirtuosoStore()
 

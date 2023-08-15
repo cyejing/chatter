@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Keyboard from '../components/Keyboard.vue'
 import ContentDisplay from '../components/ContentDisplay.vue'
-import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useVirtuosoStore } from '@/stores/virtuoso'
 
 const store = useVirtuosoStore()
