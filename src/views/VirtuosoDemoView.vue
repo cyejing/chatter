@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { reqdemo } from '@/api'
 import { useVirtuosoStore } from '@/stores/virtuoso'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 
 const store = useVirtuosoStore()
 
@@ -15,6 +16,29 @@ onUnmounted(() => {
   document.removeEventListener('keydown', keyHandle)
   console.log('the component is now unmounted')
 })
+const question = ref('')
+const answer = ref('')
+
+watch(store, (s) => {
+  if (s.compWord) {
+    question.value = s.compWord
+  }
+})
+
+watch(question, async (n) => {
+  if (n) {
+    console.log('thinking...', n)
+    answer.value = 'Thinking...'
+    // try {
+    //   let ret = await youdaoTranslate({ query: n })
+    //   answer.value = ret.translation[0]
+    // } catch (error) {
+    //   answer.value = 'Error! Could not reach the API. ' + error
+    // }
+  }
+})
+
+reqdemo()
 
 function keyHandle(ev: KeyboardEvent) {
   event.value = ev
@@ -34,8 +58,8 @@ function keyHandle(ev: KeyboardEvent) {
       {{ store.currentChar() }}
     </div>
 
-    <div class="mt-4 p-2 bg-neutral-100 border-2 border-neutral-300 rounded-sm" :hidden="!store.compWord">
-      {{ store.compWord }}
+    <div class="mt-4 p-2 bg-neutral-100 border-2 border-neutral-300 rounded-sm" :hidden="!question">
+      [{{ question }}] : [{{ answer }}]
     </div>
   </div>
 </template>

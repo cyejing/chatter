@@ -22,14 +22,14 @@ export const useVirtuosoStore = defineStore(
     const compWord = ref('')
 
     function currentWord() {
-      let s = virtuoso.sentences[virtuoso.sentenceIndex]
+      const s = virtuoso.sentences[virtuoso.sentenceIndex]
       if (s) {
         return s[virtuoso.wordIndex]
       }
     }
 
     function currentChar() {
-      let word = currentWord()
+      const word = currentWord()
       if (word) {
         return word[virtuoso.charIndex]
       }
@@ -44,7 +44,7 @@ export const useVirtuosoStore = defineStore(
     }
 
     function incIndex() {
-      let word = currentWord()
+      const word = currentWord()
       if (!word) {
         console.log('inc end')
         return
@@ -53,7 +53,7 @@ export const useVirtuosoStore = defineStore(
       // word end
       if (virtuoso.charIndex >= word.length) {
         compWord.value = ''
-        let s = virtuoso.sentences[virtuoso.sentenceIndex]
+        const s = virtuoso.sentences[virtuoso.sentenceIndex]
         // sentence end
         if (s && virtuoso.wordIndex + 1 >= s.length) {
           // virtuoso end
@@ -82,9 +82,9 @@ export const useVirtuosoStore = defineStore(
     function submit(contentStr: string) {
       clear()
       virtuoso.content = contentStr
-      let sentencesTmp = splitContent(contentStr)
-      for (let i in sentencesTmp) {
-        let words = splitSentence(sentencesTmp[i])
+      const sentencesTmp = splitContent(contentStr)
+      for (const i in sentencesTmp) {
+        const words = splitSentence(sentencesTmp[i])
         virtuoso.sentences[i] = words
       }
     }
@@ -98,15 +98,15 @@ export const useVirtuosoStore = defineStore(
     }
 
     function splitContent(str: string) {
-      let sentences = str.split(/[\.\n]/g)
+      const sentences = str.split(/[\.\n]/g)
       return sentences.filter((i) => i.trim().length > 0)
     }
 
     function splitSentence(str: string) {
-      let words = str.split(/ /g)
+      const words = str.split(/ /g)
       return words.filter((i) => i.trim().length > 0)
     }
     return { virtuoso, submit, currentWord, currentChar, inputChar, compWord }
-  },
-  { persist: true }
+  }
+  // { persist: true }
 )

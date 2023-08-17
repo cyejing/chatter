@@ -14,6 +14,8 @@ dist-ssr
 coverage
 *.local
 
+translater/public
+
 /cypress/videos/
 /cypress/screenshots/
 

@@ -1,0 +1,20 @@
+[package]
+name = "chatter"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.6.18"
+shuttle-axum = "0.24.0"
+shuttle-runtime = "0.24.0"
+shuttle-aws-rds = { version = "0.24.0", features = ["mysql"] }
+shuttle-static-folder = "0.24.0"
+tokio = "1.28.2"
+tower = "0.4.13"
+tower-http = { version = "0.4.0", features = ["cors", "fs"] }
+http = "0.2.9"
+serde = { version = "1.0.160", features = ["derive"] }
+time = { version = "0.3.20", features = ["serde"] }
+
+sqlx = { version = "0.7.1", features = ["runtime-tokio-native-tls", "mysql", "time"] }
+
