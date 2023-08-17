@@ -268,6 +268,7 @@ dependencies = [
  "shuttle-aws-rds",
  "shuttle-axum",
  "shuttle-runtime",
+ "shuttle-shared-db",
  "shuttle-static-folder",
  "sqlx",
  "time",
@@ -2005,6 +2006,18 @@ dependencies = [
  "shuttle-common",
  "strfmt",
  "thiserror",
+]
+
+[[package]]
+name = "shuttle-shared-db"
+version = "0.24.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "420bbe668adc7f1709083a5a15fc8350fee4da9217446509837365eb0f307920"
+dependencies = [
+ "async-trait",
+ "serde",
+ "shuttle-service",
+ "sqlx",
 ]
 
 [[package]]
