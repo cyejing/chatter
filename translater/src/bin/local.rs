@@ -7,9 +7,7 @@ use sqlx::mysql::MySqlPoolOptions;
 async fn main() {
     let public = PathBuf::from("public");
     let pool = MySqlPoolOptions::new()
-        .connect_lazy(
-            "mysql://didi_cQQP:6CCT2do1U@10.78.133.3:3127/im_dichat?characterEncoding=UTF-8",
-        )
+        .connect_lazy("mysql://root:mysql@localhost:20353/mysql")
         .unwrap();
     let app = create_router(pool, public).await;
     axum::Server::bind(&"0.0.0.0:8001".parse().unwrap())
