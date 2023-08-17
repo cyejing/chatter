@@ -1,11 +1,44 @@
-use axum::{routing::get, Router};
+use std::path::PathBuf;
+
+use axum::{
+    body::{boxed, Body},
+    response::Response,
+    routing::get,
+    Router,
+};
 use http::{
     header::{ACCEPT, AUTHORIZATION, ORIGIN},
-    Method,
+    Method, StatusCode,
 };
-use tower_http::cors::{AllowOrigin, CorsLayer};
+use tower::ServiceExt;
+use tower_http::{
+    cors::{AllowOrigin, CorsLayer},
+    services::ServeDir,
+};
 
-use crate::AppState;
+use sqlx::MySqlPool;
+
+#[derive(Clone)]
+pub struct AppState {
+    pub pool: MySqlPool,
+}
+pub async fn create_router(pool: MySqlPool, public: PathBuf) -> Router {
+    let state = AppState { pool };
+
+    let api_router = create_api_router(state);
+
+    Router::new()
+        .nest("/api", api_router)
+        .fallback_service(get(|req| async move {
+            match ServeDir::new(public).oneshot(req).await {
+                Ok(res) => res.map(boxed),
+                Err(err) => Response::builder()
+                    .status(StatusCode::INTERNAL_SERVER_ERROR)
+                    .body(boxed(Body::from(format!("error: {err}"))))
+                    .expect("error response"),
+            }
+        }))
+}
 
 pub fn create_api_router(state: AppState) -> Router {
     let cors = CorsLayer::new()
