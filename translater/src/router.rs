@@ -1,20 +1,15 @@
-use std::path::PathBuf;
-
 use axum::{
-    body::{boxed, Body},
-    response::Response,
+    response::{IntoResponse, Response},
     routing::get,
     Router,
 };
 use http::{
-    header::{ACCEPT, AUTHORIZATION, ORIGIN},
-    Method, StatusCode,
+    header::{self, ACCEPT, AUTHORIZATION, ORIGIN},
+    Method, StatusCode, Uri,
 };
-use tower::ServiceExt;
-use tower_http::{
-    cors::{AllowOrigin, CorsLayer},
-    services::ServeDir,
-};
+use rust_embed::RustEmbed;
+
+use tower_http::cors::{AllowOrigin, CorsLayer};
 
 use sqlx::MySqlPool;
 
@@ -22,22 +17,14 @@ use sqlx::MySqlPool;
 pub struct AppState {
     pub pool: MySqlPool,
 }
-pub async fn create_router(pool: MySqlPool, public: PathBuf) -> Router {
+pub async fn create_router(pool: MySqlPool) -> Router {
     let state = AppState { pool };
 
     let api_router = create_api_router(state);
 
     Router::new()
         .nest("/api", api_router)
-        .fallback_service(get(|req| async move {
-            match ServeDir::new(public).oneshot(req).await {
-                Ok(res) => res.map(boxed),
-                Err(err) => Response::builder()
-                    .status(StatusCode::INTERNAL_SERVER_ERROR)
-                    .body(boxed(Body::from(format!("error: {err}"))))
-                    .expect("error response"),
-            }
-        }))
+        .fallback_service(get(static_handler))
 }
 
 pub fn create_api_router(state: AppState) -> Router {
@@ -90,4 +77,42 @@ pub fn create_api_router(state: AppState) -> Router {
 
 pub async fn hello_world() -> &'static str {
     "Hello world!"
+}
+
+async fn static_handler(uri: Uri) -> impl IntoResponse {
+    let path = uri.path().trim_start_matches('/').to_string();
+
+    StaticFile(path)
+}
+
+#[derive(RustEmbed)]
+#[folder = "public/"]
+struct Asset;
+
+pub struct StaticFile<T>(pub T);
+
+impl<T> IntoResponse for StaticFile<T>
+where
+    T: Into<String>,
+{
+    fn into_response(self) -> Response {
+        let path = self.0.into();
+        let file_path = path.as_str();
+        match Asset::get(file_path) {
+            Some(content) => {
+                let mime = mime_guess::from_path(path).first_or_octet_stream();
+                ([(header::CONTENT_TYPE, mime.as_ref())], content.data).into_response()
+            }
+            None => {
+                if file_path.trim() == "" || file_path.trim().ends_with('/') {
+                    let index_html = format!("{file_path}index.html");
+                    if let Some(ct) = Asset::get(&index_html) {
+                        let mime = mime_guess::from_path(index_html).first_or_octet_stream();
+                        return ([(header::CONTENT_TYPE, mime.as_ref())], ct.data).into_response();
+                    }
+                }
+                (StatusCode::NOT_FOUND, "404 Not Found").into_response()
+            }
+        }
+    }
 }
