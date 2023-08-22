@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reqdemo } from '@/api'
+import { translate } from '@/api'
 import { useVirtuosoStore } from '@/stores/virtuoso'
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 
@@ -25,20 +25,20 @@ watch(store, (s) => {
   }
 })
 
-watch(question, async (n) => {
-  if (n) {
-    console.log('thinking...', n)
+watch(question, async (q) => {
+  if (q) {
     answer.value = 'Thinking...'
-    // try {
-    //   let ret = await youdaoTranslate({ query: n })
-    //   answer.value = ret.translation[0]
-    // } catch (error) {
-    //   answer.value = 'Error! Could not reach the API. ' + error
-    // }
+    let ret = await translate({
+      provider: 'google',
+      q: q,
+      to: 'zh-cn',
+      from: 'auto'
+    })
+    if (ret) {
+      answer.value = ret.trans.toString()
+    }
   }
 })
-
-reqdemo()
 
 function keyHandle(ev: KeyboardEvent) {
   event.value = ev

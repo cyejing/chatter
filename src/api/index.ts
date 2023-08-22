@@ -1,16 +1,35 @@
 import axios from 'axios'
 
 interface TranslateReq {
-  query: string
+  provider: String
+  q: String
+  from: String
+  to: String
 }
 
 interface TranslateRet {
-  code: number
-  query: string
-  translation: string[]
+  provider: String
+  q: String
+  from: String
+  to: String
+  trans: String
 }
 
-export async function reqdemo() {
-  const resp = await axios.get('/api/health', {})
-  console.log(resp)
+export async function translate(req: TranslateReq): Promise<TranslateRet | null> {
+  try {
+    const { data } = await axios.post<TranslateRet>('/api/translate', req, {
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log('error message: ', error.message)
+    } else {
+      console.log('unexpected error: ', error)
+    }
+    return null
+  }
 }

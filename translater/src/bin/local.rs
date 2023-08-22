@@ -1,8 +1,10 @@
-use chatter::router::create_router;
+use chatter::{init_log, router::create_router};
 use sqlx::mysql::MySqlPoolOptions;
 
 #[tokio::main]
 async fn main() {
+    init_log();
+
     let pool = MySqlPoolOptions::new()
         .connect_lazy("mysql://root:mysql@localhost:20353/mysql")
         .unwrap();
