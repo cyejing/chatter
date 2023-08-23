@@ -63,8 +63,8 @@ async fn google_translate(req: Json<TranslateReq>) -> anyhow::Result<Json<Transl
     let trans = resp
         .get(0)
         .and_then(|v| v.get(0))
-        .map(|s| s.clone())
-        .unwrap_or_else(|| String::default());
+        .cloned()
+        .unwrap_or_default();
     Ok(Json(TranslateResp {
         provider: req.provider.clone(),
         q: req.q.clone(),
