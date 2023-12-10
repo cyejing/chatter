@@ -6,18 +6,16 @@ use axum::{
 use http::{header, StatusCode, Uri};
 use rust_embed::RustEmbed;
 
-use sqlx::MySqlPool;
 use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
 
 use crate::translate::translate;
 
 #[derive(Clone)]
-pub struct AppState {
-    pub pool: MySqlPool,
-}
-pub async fn create_router(pool: MySqlPool) -> Router {
-    let state = AppState { pool };
+pub struct AppState {}
+
+pub async fn create_router() -> Router {
+    let state = AppState {};
 
     let api_router = create_api_router(state);
 

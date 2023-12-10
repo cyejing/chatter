@@ -5,10 +5,7 @@ use sqlx::mysql::MySqlPoolOptions;
 async fn main() {
     init_log();
 
-    let pool = MySqlPoolOptions::new()
-        .connect_lazy("mysql://root:mysql@localhost:20353/mysql")
-        .unwrap();
-    let app = create_router(pool).await;
+    let app = create_router().await;
     axum::Server::bind(&"0.0.0.0:8000".parse().unwrap())
         .serve(app.into_make_service())
         .await
