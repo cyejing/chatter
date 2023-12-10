@@ -30,7 +30,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "tauri-vue",
+        "title": "Chatter",
         "minWidth": 1100,
         "minHeight": 900
       }
