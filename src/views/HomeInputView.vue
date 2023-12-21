@@ -19,6 +19,7 @@ function submit() {
         <button class="absolute -right-24 bg-cyan-600 text-white rounded-md shadow-sm px-5 py-2" @click="submit">
             提交
         </button>
+        <button class="btn">测试</button>
     </div>
 </template>
 <style scoped></style>

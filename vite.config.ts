@@ -1,7 +1,7 @@
-import { fileURLToPath, URL } from 'node:url';
+import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
@@ -12,13 +12,20 @@ export default defineConfig(async () => ({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
-  //
-  // 1. prevent vite from obscuring rust errors
-  clearScreen: false,
-  // 2. tauri expects a fixed port, fail if that port is not available
+  build: {
+    outDir: 'server/public'
+  },
   server: {
-    port: 1420,
-    strictPort: true,
-  }
-}));
+    //主要是加上这段代码
+    host: '127.0.0.1',
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8000', //实际请求地址
+        changeOrigin: true
+        // rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
+  clearScreen: false
+}))
