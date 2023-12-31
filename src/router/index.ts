@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeInput from '@/views/HomeInputView.vue'
+import Home from '@/views/Home.vue'
 import Playing from '@/views/Playing.vue'
 
 const router = createRouter({
@@ -8,12 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeInput
-    },
-    {
-      path: '/virtuoso',
-      name: 'virtuoso',
-      component: () => import('../views/VirtuosoDemoView.vue')
+      component: Home
     },
     {
       path: '/playing',
