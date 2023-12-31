@@ -6,7 +6,7 @@ defineProps(['event'])
 const store = useContentStore()
 const isLinePassed = function (lineIndex: number) {
   return {
-    'text-red-100': store.store.lineIndex - 1 >= lineIndex
+    'text-neutral': store.store.lineIndex - 1 >= lineIndex
   }
 }
 const isLineCharPassed = function (lineIndex: number, charIndex: number) {
@@ -15,14 +15,14 @@ const isLineCharPassed = function (lineIndex: number, charIndex: number) {
     charIndex == store.store.currentLineCharIndex
   ) {
     return {
-      'text-red-500': true
+      'text-secondary': true
     }
   } else if (
     lineIndex == store.store.lineIndex &&
     charIndex <= store.store.currentLineCharIndex - 1
   ) {
     return {
-      'text-red-100': true
+      'text-success': true
     }
   } else {
     return {}
@@ -30,7 +30,7 @@ const isLineCharPassed = function (lineIndex: number, charIndex: number) {
 }
 </script>
 <template>
-  <div class="text-center">
+  <div class="text-center pt-4">
     <template v-for="(line, i) in store.store.lines" :key="line">
       <p :class="isLinePassed(i)">
         <template v-for="(char, u) in line" :key="char">

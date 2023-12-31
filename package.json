@@ -5,22 +5,24 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "open": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open' 'cargo run --manifest-path ./server/Cargo.toml'",
-    "preview": "vite preview",
+    "dev-server": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open' 'cargo run --manifest-path ./server/Cargo.toml'",
+    "build": "run-p vite-build && cargo build --release --manifest-path ./server/Cargo.toml",
+    "server": "run-p vite-build && cargo run --manifest-path ./server/Cargo.toml",
     "vite-build": "run-p type-check build-only",
+    "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "tauri": "tauri",
-    "build": "run-p vite-build && cargo build --release --manifest-path ./server/Cargo.toml",
-    "server": "run-p vite-build && cargo run --manifest-path ./server/Cargo.toml"
+    "tauri": "tauri"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.5.1",
+    "@vueuse/core": "^10.7.1",
     "axios": "^1.6.2",
     "pinia": "^2.0.32",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "theme-change": "^2.5.0",
     "vue": "^3.3.4",
     "vue-router": "^4.1.6"
   },

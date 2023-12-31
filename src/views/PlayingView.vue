@@ -23,10 +23,14 @@ function keyHandle(ev: KeyboardEvent) {
 }
 </script>
 <template>
-  <main class="container mx-auto flex flex-col h-screen">
-    <ContentLine :event="event"></ContentLine>
-  </main>
-  <div class="absolute bottom-0 left-0 w-screen bg-gray-500">
+  <div class="w-screen bg-base-200">
+    <main class="container mx-auto flex flex-col h-screen">
+      <div class="py-2 invisible"><button class="btn">sitg</button></div>
+      <ContentLine :event="event"></ContentLine>
+      <div class="py-2 invisible"><button class="btn">sitg</button></div>
+    </main>
+  </div>
+  <div class="absolute bottom-0 left-0 w-screen bg-base-100">
     <div class="container mx-auto py-2">
       <KdbKeyboard></KdbKeyboard>
     </div>
