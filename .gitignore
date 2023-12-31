@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+server/public
+src-tauri/*
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*

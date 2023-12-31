@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Content from '@/components/Content.vue'
-import Kdb from '@/components/Kdb.vue'
+import ContentLine from '@/components/ContentLine.vue'
+import KdbKeyboard from '@/components/KdbKeyboard.vue'
 import { useContentStore } from '@/stores/content'
 import { onMounted, onUnmounted, ref } from 'vue'
 
@@ -24,11 +24,11 @@ function keyHandle(ev: KeyboardEvent) {
 </script>
 <template>
   <main class="container mx-auto flex flex-col h-screen">
-    <Content :event="event"></Content>
+    <ContentLine :event="event"></ContentLine>
   </main>
   <div class="absolute bottom-0 left-0 w-screen bg-gray-500">
     <div class="container mx-auto py-2">
-      <Kdb></Kdb>
+      <KdbKeyboard></KdbKeyboard>
     </div>
   </div>
 </template>

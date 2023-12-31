@@ -59,7 +59,7 @@ export const useContentStore = defineStore('content', () => {
   }
 
   function incIndex() {
-    let char = currentChar()
+    const char = currentChar()
     if (char === '\n') {
       store.lineIndex += 1
       store.wordIndex += 1
@@ -77,12 +77,12 @@ export const useContentStore = defineStore('content', () => {
   function submit(raw: string) {
     clear()
     store.raw = raw
-    let lines = splitLine(raw)
-    for (let [i, line] of lines.entries()) {
-      let words = splitWord(line)
+    const lines = splitLine(raw)
+    for (const [i, line] of lines.entries()) {
+      const words = splitWord(line)
       let newLine = ''
       store.words = store.words.concat(words)
-      for (let [u, word] of words.entries()) {
+      for (const [u, word] of words.entries()) {
         if (u != 0) {
           newLine = newLine + ' ' + word
         } else {
@@ -111,8 +111,8 @@ export const useContentStore = defineStore('content', () => {
   }
 
   function splitLine(str: string) {
-    const sentences = str.split(/[\.\n]/g)
-    return sentences.filter((i) => i.trim().length > 0)
+    const lines = str.split(/[.\n]/g)
+    return lines.filter((i) => i.trim().length > 0)
   }
 
   function splitWord(str: string) {

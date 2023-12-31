@@ -31,9 +31,9 @@ const isLineCharPassed = function (lineIndex: number, charIndex: number) {
 </script>
 <template>
   <div class="text-center">
-    <template v-for="(line, i) in store.store.lines">
+    <template v-for="(line, i) in store.store.lines" :key="line">
       <p :class="isLinePassed(i)">
-        <template v-for="(char, u) in line">
+        <template v-for="(char, u) in line" :key="char">
           <span :class="isLineCharPassed(i, u)">{{ char }}</span>
         </template>
       </p>

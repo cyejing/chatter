@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 
 const props = defineProps(['event'])
 
@@ -235,7 +235,12 @@ const keys = [
     style: 'width: 108px'
   },
   {
-    keyState: { state: ref(''), keyStr: 'd', keyCode: 16, codeStr: 'ShiftLeft' },
+    keyState: {
+      state: ref(''),
+      keyStr: 'd',
+      keyCode: 16,
+      codeStr: 'ShiftLeft'
+    },
     key: 'shift',
     style: 'margin-left:0;width: 147px'
   },
@@ -295,12 +300,22 @@ const keys = [
     style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
   },
   {
-    keyState: { state: ref(''), keyStr: 'm', keyCode: 16, codeStr: 'ShiftRight' },
+    keyState: {
+      state: ref(''),
+      keyStr: 'm',
+      keyCode: 16,
+      codeStr: 'ShiftRight'
+    },
     key: 'shift',
     style: 'margin-left:' + last_margin + 'width: ' + normal_key_width
   },
   {
-    keyState: { state: ref(''), keyStr: 'm', keyCode: 17, codeStr: 'ControlLeft' },
+    keyState: {
+      state: ref(''),
+      keyStr: 'm',
+      keyCode: 17,
+      codeStr: 'ControlLeft'
+    },
     key: 'ctrl',
     style: 'margin-left:0; width: 65px'
   },
@@ -326,7 +341,12 @@ const keys = [
   },
   { key: 'fn', style: 'width: 50px' },
   {
-    keyState: { state: ref(''), keyStr: 'm', keyCode: 17, codeStr: 'ControlRight' },
+    keyState: {
+      state: ref(''),
+      keyStr: 'm',
+      keyCode: 17,
+      codeStr: 'ControlRight'
+    },
     key: 'ctrl',
     style: 'width: 50px'
   },
@@ -363,7 +383,13 @@ for (let key of keys) {
 <template>
   <div class="fixed w-full bg-neutral-100 bottom-0">
     <div class="keyboard">
-      <div v-for="k in keys" class="key" :class="{ keydown: isKeydown(k.keyState) }" :style="k.style">
+      <div
+        v-for="k in keys"
+        class="key"
+        :class="{ keydown: isKeydown(k.keyState) }"
+        :style="k.style"
+        :key="k.key"
+      >
         <span class="noselect" v-html="k.key"></span>
       </div>
     </div>
