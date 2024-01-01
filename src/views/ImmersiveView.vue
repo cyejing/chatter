@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import ContentLine from '@/components/ContentLine.vue'
-import KdbKeyboard from '@/components/KdbKeyboard.vue'
+import ImmersiveKeyboard from '../components/ImmersiveKeyboard.vue'
 import { useContentStore } from '@/stores/content'
 import { onMounted, onUnmounted, ref } from 'vue'
 
@@ -20,7 +19,7 @@ onUnmounted(() => {
 })
 
 function keyHandle(ev: KeyboardEvent) {
-  // ev.preventDefault()
+  ev.preventDefault()
   event.value = ev
   if (ev.type == 'keydown') {
     store.inputChar(ev.key)
@@ -28,21 +27,6 @@ function keyHandle(ev: KeyboardEvent) {
 }
 </script>
 <template>
-  <div class="w-screen bg-base-200">
-    <main class="container mx-auto flex flex-col h-screen">
-      <div class="py-2 invisible"><button class="btn">sitg</button></div>
-      <div class="py-6 grow">
-        <ContentLine :event="event"></ContentLine>
-      </div>
-      <div class="py-2 invisible">
-        <KdbKeyboard></KdbKeyboard>
-      </div>
-    </main>
-  </div>
-  <div class="absolute bottom-0 left-0 w-screen bg-base-100">
-    <div class="container max-w-xl mx-auto py-2">
-      <KdbKeyboard :event="event"></KdbKeyboard>
-    </div>
-  </div>
+  <ImmersiveKeyboard :event="event"></ImmersiveKeyboard>
 </template>
 <style scoped></style>

@@ -30,11 +30,11 @@ export const useContentStore = defineStore('content', () => {
     charIndex: 0,
     currentLineCharIndex: 0
   })
-  const compWord = ref('')
 
   function currentLine() {
     return store.lines[store.lineIndex]
   }
+
   function currentWord() {
     return store.words[store.wordIndex]
   }
@@ -108,6 +108,7 @@ export const useContentStore = defineStore('content', () => {
     store.lineIndex = 0
     store.wordIndex = 0
     store.charIndex = 0
+    store.currentLineCharIndex = 0
   }
 
   function splitLine(str: string) {
@@ -126,7 +127,6 @@ export const useContentStore = defineStore('content', () => {
     currentLine,
     currentWord,
     currentChar,
-    inputChar,
-    compWord
+    inputChar
   }
 })

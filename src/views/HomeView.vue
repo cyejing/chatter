@@ -25,7 +25,7 @@ function submit() {
           placeholder="输入待翻译的文本"
         ></textarea>
       </div>
-      <div class="py-2 invisible"><button class="btn">sitg</button></div>
+      <div class="invisible"><button class="btn">sitg</button></div>
     </main>
   </div>
   <div class="absolute bottom-0 left-0 w-screen bg-base-100">

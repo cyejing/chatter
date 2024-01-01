@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "dev-server": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open' 'cargo run --manifest-path ./server/Cargo.toml'",
     "build": "run-p vite-build && cargo build --release --manifest-path ./server/Cargo.toml",
     "server": "run-p vite-build && cargo run --manifest-path ./server/Cargo.toml",
