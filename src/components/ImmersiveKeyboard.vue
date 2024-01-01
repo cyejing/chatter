@@ -381,7 +381,7 @@ for (let key of keys) {
 }
 </script>
 <template>
-  <div class="fixed w-full bg-neutral-100 bottom-0">
+  <div class="fixed w-full bg-neutral-100 bottom-0 text-black">
     <div class="keyboard">
       <div
         v-for="k in keys"

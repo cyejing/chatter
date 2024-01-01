@@ -1,15 +1,7 @@
-use log::info;
-use server::{init_log, router::create_router};
+use chatter::router::create_router;
 
-#[tokio::main]
-async fn main() {
-    init_log();
-
-    let addr = "0.0.0.0:8000";
+#[shuttle_runtime::main]
+async fn axum() -> shuttle_axum::ShuttleAxum {
     let app = create_router().await;
-    info!("Listen server {addr}");
-    axum::Server::bind(&addr.parse().expect("parse address failed"))
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    Ok(app.into())
 }

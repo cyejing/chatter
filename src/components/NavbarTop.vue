@@ -1,18 +1,7 @@
 <script setup lang="ts">
 import { useDark, usePreferredDark, useToggle } from '@vueuse/core'
 
-const realDark = usePreferredDark()
-useDark({
-  selector: 'html',
-  attribute: 'data-theme',
-  valueDark: 'dark',
-  valueLight: 'light',
-  disableTransition: false,
-  onChanged: function (isDark, defaultHandler, mode) {
-    defaultHandler(mode)
-    realDark.value = isDark
-  }
-})
+// const realDark = usePreferredDark()
 const appearanceDark = useDark({
   selector: 'html',
   attribute: 'data-theme',
@@ -20,11 +9,20 @@ const appearanceDark = useDark({
   valueLight: 'light',
   disableTransition: false,
   storageKey: 'chatter-theme-appearance',
-  onChanged: function (isDark, defaultHandler, mode) {
-    defaultHandler(mode)
-    realDark.value = isDark
-  }
+  
 })
+// useDark({
+//   selector: 'html',
+//   attribute: 'data-theme',
+//   valueDark: 'dark',
+//   valueLight: 'light',
+//   disableTransition: false,
+//   onChanged: function (isDark, defaultHandler, mode) {
+//     defaultHandler(mode)
+//     realDark.value = isDark
+//   }
+// })
+
 const toggleDark = useToggle(appearanceDark)
 </script>
 <template>
@@ -56,7 +54,7 @@ const toggleDark = useToggle(appearanceDark)
           type="checkbox"
           value="synthwave"
           class="toggle toggle-neutral-content theme-controller"
-          :checked="realDark"
+          :checked="appearanceDark"
           @click="toggleDark()"
         />
         <svg
