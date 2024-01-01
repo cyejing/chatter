@@ -1,18 +1,18 @@
 import axios from 'axios'
 
 interface TranslateReq {
-  provider: String
-  q: String
-  from: String
-  to: String
+  provider: string
+  q: string
+  to: string
+  from?: string
 }
 
 interface TranslateResponse {
-  provider: String
-  q: String
-  from: String
-  to: String
-  trans: String
+  provider: string
+  q: string
+  from: string
+  to: string
+  trans: string
 }
 
 export async function translate(

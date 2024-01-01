@@ -4,41 +4,99 @@ import { useContentStore } from '@/stores/content'
 defineProps(['event'])
 
 const store = useContentStore()
-const isLinePassed = function (lineIndex: number) {
+
+function isCurrentLine(lineIndex: number) {
+  return store.store.lineIndex == lineIndex
+}
+
+function isLinePassed(lineIndex: number) {
   return {
-    'text-neutral': store.store.lineIndex - 1 >= lineIndex
+    'bg-base-300': store.store.lineIndex == lineIndex
   }
 }
-const isLineCharPassed = function (lineIndex: number, charIndex: number) {
-  if (
-    lineIndex == store.store.lineIndex &&
-    charIndex == store.store.currentLineCharIndex
-  ) {
-    return {
-      'text-secondary': true
-    }
-  } else if (
-    lineIndex == store.store.lineIndex &&
-    charIndex <= store.store.currentLineCharIndex - 1
-  ) {
-    return {
-      'text-success': true
-    }
+function isWordPassed(lineIndex: number, wordIndex: number) {
+  return {
+    'text-success':
+      store.store.lineIndex == lineIndex &&
+      store.store.lineWordIndex - 1 >= wordIndex,
+    'tooltip-open':
+      store.currentWordEnd() && store.store.lineWordIndex == wordIndex
+  }
+}
+function isCharPassed(
+  lineIndex: number,
+  wordIndex: number,
+  charIndex: number,
+  char: string
+) {
+  let isCurrentWord =
+    store.store.lineIndex == lineIndex && store.store.lineWordIndex == wordIndex
+  let isCurrentChar = charIndex == store.store.lineWordCharIndex
+
+  return {
+    'text-secondary': isCurrentWord && isCurrentChar,
+    'text-success':
+      isCurrentWord && store.store.lineWordCharIndex - 1 >= charIndex,
+    'text-base-content':
+      isCurrentWord && store.store.lineWordCharIndex + 1 <= charIndex,
+    char: isCurrentWord && store.currentChar() == '\n' ? '⏎' : char
+  }
+}
+
+function isWordEnd(lineIndex: number, wordIndex: number) {
+  let isWordEnd =
+    store.currentWordEnd() &&
+    store.store.lineIndex == lineIndex &&
+    store.store.lineWordIndex == wordIndex
+  return {
+    'text-secondary': isWordEnd,
+    char: isWordEnd ? '␣' : ' '
+  }
+}
+function mainTop() {
+  let offest = 3 - store.store.lineIndex
+  return {
+    top: offest * 2 + 'em'
+  }
+}
+function transTip(word: string) {
+  if (word == store.currentWord()) {
+    let trans = store.store.translateWords[store.store.wordIndex]
+    return trans ? trans : '查询中...'
   } else {
-    return {}
+    return '查询中...'
   }
 }
 </script>
 <template>
-  <div class="text-center pt-4">
-    <template v-for="(line, i) in store.store.lines" :key="line">
-      <p :class="isLinePassed(i)">
-        <template v-for="(char, u) in line" :key="char">
-          <span :class="isLineCharPassed(i, u)">{{ char }}</span>
+  <div class="relative w-full h-full overflow-hidden">
+    <div
+      class="text-center absolute w-full leading-8 text-lg/8"
+      :style="mainTop()"
+    >
+      <p
+        v-for="(line, x) in store.store.lineWords"
+        :key="x"
+        :class="isLinePassed(x)"
+      >
+        <template v-if="isCurrentLine(x)" v-for="(word, y) in line" :key="y">
+          <span
+            class="tooltip tooltip-bottom inline"
+            :data-tip="transTip(word)"
+            :class="isWordPassed(x, y)"
+          >
+            <span
+              v-for="(char, z) in word"
+              :key="char"
+              :class="isCharPassed(x, y, z, char)"
+              >{{ isCharPassed(x, y, z, char).char }}</span
+            >
+            <span :class="isWordEnd(x, y)">{{ isWordEnd(x, y).char }}</span>
+          </span>
         </template>
+        <span v-else class="opacity-50"> {{ store.store.lines[x] }} </span>
       </p>
-    </template>
-    <p>{{ event.key }}</p>
+    </div>
   </div>
 </template>
 <style scoped></style>

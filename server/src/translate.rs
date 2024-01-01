@@ -5,10 +5,11 @@ use axum::{
 use http::StatusCode;
 use lazy_static::lazy_static;
 
+use log::info;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct TranslateReq {
     provider: String,
     q: String,
@@ -17,7 +18,7 @@ pub struct TranslateReq {
     to: String,
 }
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 pub struct TranslateResp {
     provider: String,
     q: String,
@@ -31,6 +32,7 @@ fn default_from() -> String {
 }
 
 pub async fn translate(req: Json<TranslateReq>) -> Response {
+    info!("translate {req:?}");
     match req.provider.as_str() {
         "google" => google_translate(req).await.unwrap().into_response(),
         _ => (

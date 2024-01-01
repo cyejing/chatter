@@ -28,8 +28,8 @@ const appearanceDark = useDark({
 const toggleDark = useToggle(appearanceDark)
 </script>
 <template>
-  <div class="absolute top-0 left-0 w-screen shadow">
-    <div class="navbar bg-base-100">
+  <div class="fixed top-0 left-0 w-screen shadow-md">
+    <div class="navbar bg-base-200">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl">
           <RouterLink to="/">Chatter</RouterLink>
@@ -55,7 +55,7 @@ const toggleDark = useToggle(appearanceDark)
         <input
           type="checkbox"
           value="synthwave"
-          class="toggle theme-controller"
+          class="toggle toggle-neutral-content theme-controller"
           :checked="realDark"
           @click="toggleDark()"
         />

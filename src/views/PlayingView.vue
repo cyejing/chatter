@@ -20,7 +20,7 @@ onUnmounted(() => {
 })
 
 function keyHandle(ev: KeyboardEvent) {
-  // ev.preventDefault()
+  ev.preventDefault()
   event.value = ev
   if (ev.type == 'keydown') {
     store.inputChar(ev.key)
@@ -28,18 +28,20 @@ function keyHandle(ev: KeyboardEvent) {
 }
 </script>
 <template>
-  <div class="w-screen bg-base-200">
-    <main class="container mx-auto flex flex-col h-screen">
-      <div class="py-2 invisible"><button class="btn">sitg</button></div>
-      <div class="py-6 grow">
-        <ContentLine :event="event"></ContentLine>
-      </div>
-      <div class="py-2 invisible">
-        <KdbKeyboard></KdbKeyboard>
-      </div>
-    </main>
+  <div>
+    <div class="w-screen">
+      <main class="container mx-auto flex flex-col h-screen">
+        <div class="py-2 invisible"><button class="btn">sitg</button></div>
+        <div class="py-4 grow">
+          <ContentLine :event="event"></ContentLine>
+        </div>
+        <div class="py-2 invisible">
+          <KdbKeyboard></KdbKeyboard>
+        </div>
+      </main>
+    </div>
   </div>
-  <div class="absolute bottom-0 left-0 w-screen bg-base-100">
+  <div class="fixed bottom-0 left-0 w-screen bg-base-200">
     <div class="container max-w-xl mx-auto py-2">
       <KdbKeyboard :event="event"></KdbKeyboard>
     </div>
