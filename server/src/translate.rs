@@ -2,11 +2,11 @@ use axum::{
     response::{IntoResponse, Response},
     Json,
 };
-use http::{header, HeaderValue, StatusCode};
-use lazy_static::lazy_static;
 
+use http::StatusCode;
 use log::info;
-use reqwest::Client;
+use once_cell::sync::Lazy;
+use reqwest::{Client, header::{self, HeaderValue}};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -46,11 +46,11 @@ pub async fn translate(req: Json<TranslateReq>) -> Response {
     }
 }
 
-lazy_static! {
-    static ref CLIENT: Client = reqwest::ClientBuilder::new()
+static CLIENT: Lazy<Client> = Lazy::new(|| {
+    reqwest::ClientBuilder::new()
         .build()
-        .expect("reqwest client build err");
-}
+        .expect("reqwest client build failed")
+});
 
 // https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-CN&dt=at&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=sos&dt=ss&dt=t&q=accessible&tk=592148.929806
 async fn google_translate2(req: Json<TranslateReq>) -> anyhow::Result<Json<TranslateResp>> {

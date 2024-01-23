@@ -8,8 +8,10 @@ async fn main() {
     let addr = "0.0.0.0:8000";
     let app = create_router().await;
     info!("Listen server {addr}");
-    axum::Server::bind(&addr.parse().expect("parse address failed"))
-        .serve(app.into_make_service())
+    let listener = tokio::net::TcpListener::bind(addr)
         .await
-        .unwrap();
+        .expect("bind addr  failed");
+    axum::serve(listener, app)
+        .await
+        .expect("axum server failed");
 }
