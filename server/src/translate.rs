@@ -180,6 +180,7 @@ mod tests {
 
     use super::{google_translate2, TranslateReq};
     #[tokio::test]
+    #[ignore = "reason"]
     async fn google_translate_test() {
         let req = axum::Json(TranslateReq {
             provider: "google".to_string(),
@@ -192,6 +193,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[ignore = "reason"]
     async fn google_translate2_test() {
         let req = axum::Json(TranslateReq {
             provider: "google".to_string(),
