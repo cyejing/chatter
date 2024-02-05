@@ -1,4 +1,4 @@
-use chatter::router::create_router;
+use chatter_server::router::create_router;
 
 #[shuttle_runtime::main]
 async fn axum() -> shuttle_axum::ShuttleAxum {

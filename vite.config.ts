@@ -13,7 +13,7 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'server/public'
+    outDir: 'dist'
   },
   server: {
     //主要是加上这段代码

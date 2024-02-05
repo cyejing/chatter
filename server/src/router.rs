@@ -47,7 +47,7 @@ async fn static_handler(uri: Uri) -> impl IntoResponse {
 }
 
 #[derive(RustEmbed)]
-#[folder = "public/"]
+#[folder = "../dist"]
 struct Asset;
 
 pub struct StaticFile<T>(pub T);

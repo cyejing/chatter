@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "dev-server": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open' 'cargo run --bin slef_server --manifest-path ./server/Cargo.toml'",
-    "build": "run-p vite-build && cargo build --release --manifest-path ./server/Cargo.toml",
-    "server": "run-p build-only && cargo run --manifest-path ./server/Cargo.toml",
+    "dev-server": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open' 'cargo run --bin self_server'",
+    "build": "run-p vite-build && cargo build --release",
+    "deploy": "run-p vite-build && cargo shuttle deploy --allow-dirty",
+    "server": "run-p build-only && cargo run  --bin self_server",
     "vite-build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",

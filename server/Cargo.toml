@@ -1,5 +1,5 @@
 [package]
-name = "chatter"
+name = "chatter-server"
 version = "0.1.0"
 edition = "2021"
 
@@ -11,8 +11,8 @@ tokio = {version="1.28.2", features=["full"]}
 tower = "0.4.13"
 tower-http = { version = "0.5", features = ["cors", "fs", "trace"] }
 http = "1"
-shuttle-axum = "0.36"
-shuttle-runtime = "0.36"
+shuttle-axum = "0.38"
+shuttle-runtime = "0.38"
 
 serde = { version = "1.0.160", features = ["derive"] }
 serde_json = "1"

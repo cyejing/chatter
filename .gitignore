@@ -12,8 +12,8 @@ dist
 dist-ssr
 *.local
 server/public
-src-tauri/*
 *.tsbuildinfo
+target
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +25,4 @@ src-tauri/*
 *.njsproj
 *.sln
 *.sw?
+

@@ -1,4 +1,4 @@
-use chatter::{init_log, router::create_router};
+use chatter_server::{init_log, router::create_router};
 use log::info;
 
 #[tokio::main]
