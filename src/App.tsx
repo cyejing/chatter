@@ -1,10 +1,19 @@
-import TextInput from "./components/TextInput";
+import { useState } from "react";
+import HomeInput from "./components/HomeInput";
+import ChatterBoard from "./components/ChatterBoard";
 
 function App() {
+  const [homeState, setHomeState] = useState("home");
+
   return (
     <>
-      <div className="container mx-auto px-10 pt-10">
-        <TextInput></TextInput>
+      <div className="w-screen">
+        {homeState === "home" && (
+          <HomeInput title="home" onChange={() => setHomeState("board")} />
+        )}
+        {homeState === "board" && (
+          <ChatterBoard title="board" onChange={() => setHomeState("home")} />
+        )}
       </div>
     </>
   );
