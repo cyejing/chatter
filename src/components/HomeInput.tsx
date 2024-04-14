@@ -1,9 +1,9 @@
-interface TextInputAttr {
+interface TextInputProp {
   title: String;
   onChange: () => void;
 }
 
-export default function TextInput({ title, onChange }: TextInputAttr) {
+export default function TextInput({ title, onChange }: TextInputProp) {
   function handleSubmit() {
     console.log(title);
     onChange();
@@ -11,7 +11,7 @@ export default function TextInput({ title, onChange }: TextInputAttr) {
 
   return (
     <>
-      <div className="container mx-auto h-screen flex flex-col">
+      <main className="container mx-auto h-screen flex flex-col">
         <div className="grow p-6">
           <textarea
             className="textarea textarea-bordered resize-none w-full h-full text-lg"
@@ -22,7 +22,7 @@ export default function TextInput({ title, onChange }: TextInputAttr) {
         <div className="invisible p-6">
           <button className="btn">sitg</button>
         </div>
-      </div>
+      </main>
 
       <div className="absolute bottom-0 left-0 w-screen bg-base-200">
         <div className="container mx-auto p-6 flex justify-end">
