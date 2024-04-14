@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import KeyBoard from "./KeyBoard";
 import TextBoard from "./TextBoard";
+import { invoke } from "@tauri-apps/api";
 
 interface ChatterBoardProp {
   title: String;
@@ -25,10 +26,25 @@ export default function ChatterBoard({ onChange }: ChatterBoardProp) {
 
     if (e.type === "keydown") {
       setKeyState((ks) => [...ks, keyCode]);
+      dispatch(keyCode);
     } else if (e.type === "keyup") {
       setKeyState((ks) => ks.filter((k) => k.key !== e.key));
     }
   }
+  function dispatch(keyCode: KeyCode) {
+    if (keyCode?.key === "2") {
+      console.log("invoke translate");
+      invoke("translate", {
+        req: {
+          provider: "google",
+          q: "current key",
+          from: "auto",
+          to: "zh-cn",
+        },
+      }).then((message) => console.log("translate resp:", message));
+    }
+  }
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyboardEvent);
     document.addEventListener("keyup", handleKeyboardEvent);
