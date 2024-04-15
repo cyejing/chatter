@@ -1,5 +1,7 @@
+use std::time::Duration;
+
 use anyhow::anyhow;
-use log::info;
+use log::{error, info};
 use once_cell::sync::Lazy;
 use reqwest::{
     header::{self, HeaderValue},
@@ -32,18 +34,29 @@ fn default_from() -> String {
     "auto".to_string()
 }
 
-#[allow(dead_code)]
 pub async fn translate(req: TranslateReq) -> anyhow::Result<TranslateResp> {
-    info!("translate {req:?}");
-    match req.provider.as_str() {
+    info!("translate req:{req:?}");
+    let ret = match req.provider.as_str() {
         "google" => google_translate(req).await,
         "googleb" => google_translate_back(req).await,
         _ => Err(anyhow!(format!("unknown provider {}", req.provider))),
+    };
+    match ret {
+        Ok(resp) => {
+            info!("translate resp:{resp:?}");
+            Ok(resp)
+        }
+        Err(e) => {
+            error!("translate err:{e:?}");
+            Err(e)
+        }
     }
 }
 
 static CLIENT: Lazy<Client> = Lazy::new(|| {
     reqwest::ClientBuilder::new()
+        .connect_timeout(Duration::from_secs(3))
+        .timeout(Duration::from_secs(5))
         .build()
         .expect("reqwest client build failed")
 });
