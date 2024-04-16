@@ -34,7 +34,8 @@ fn default_from() -> String {
     "auto".to_string()
 }
 
-pub async fn translate(req: TranslateReq) -> anyhow::Result<TranslateResp> {
+#[tauri::command]
+pub async fn translate(req: TranslateReq) -> Result<TranslateResp, String> {
     info!("translate req:{req:?}");
     let ret = match req.provider.as_str() {
         "google" => google_translate(req).await,
@@ -48,7 +49,7 @@ pub async fn translate(req: TranslateReq) -> anyhow::Result<TranslateResp> {
         }
         Err(e) => {
             error!("translate err:{e:?}");
-            Err(e)
+            Err(format!("{e}"))
         }
     }
 }

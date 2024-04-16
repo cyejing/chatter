@@ -38,3 +38,12 @@ export async function translate(req: TranslateReq) {
     req: req,
   });
 }
+
+export function recognize(text: string) {
+  return invoke<TranslateResp>("recognize", {
+    req: {
+      text: text,
+      mode: "no_pun",
+    },
+  });
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import KeyBoard from "./KeyBoard";
 import TextBoard from "./TextBoard";
-import { translate_q } from "../utils/translate";
+import { translate_q } from "../utils/RustAgent";
 
 interface ChatterBoardProp {
   title: string;

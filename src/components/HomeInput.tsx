@@ -1,11 +1,18 @@
+import { useState } from "react";
+import { recognize } from "../utils/RustAgent";
+
 interface TextInputProp {
   title: string;
   onChange: () => void;
 }
 
+/* eslint-disable-next-line */
 export default function TextInput({ title, onChange }: TextInputProp) {
+  /* eslint-disable-next-line */
+  const [text, setText] = useState("");
+
   function handleSubmit() {
-    console.log(title);
+    recognize(text).then((m) => console.log(m));
     onChange();
   }
 
@@ -14,8 +21,9 @@ export default function TextInput({ title, onChange }: TextInputProp) {
       <main className="container mx-auto h-screen flex flex-col">
         <div className="grow p-6">
           <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
             className="textarea textarea-bordered resize-none w-full h-full text-lg"
-            v-model="textInput"
             placeholder="输入待翻译的文本"
           ></textarea>
         </div>
