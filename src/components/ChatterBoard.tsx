@@ -4,7 +4,7 @@ import TextBoard from "./TextBoard";
 import { translate_q } from "../utils/translate";
 
 interface ChatterBoardProp {
-  title: String;
+  title: string;
   onChange: () => void;
 }
 
@@ -18,7 +18,7 @@ export default function ChatterBoard({ onChange }: ChatterBoardProp) {
   const [keyState, setKeyState] = useState<Array<KeyCode>>([]);
 
   function handleKeyboardEvent(e: KeyboardEvent) {
-    let keyCode: KeyCode = {
+    const keyCode: KeyCode = {
       key: e.key,
       code: e.code,
       type: e.type,

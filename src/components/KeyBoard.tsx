@@ -9,7 +9,8 @@ export default function KeyBoard({ keyState }: KeyBoardProp) {
     if (keyState === undefined) {
       return;
     }
-    let currentKeyState = keyState.find((k) => k.key == key);
+
+    const currentKeyState = keyState.find((k) => k.key == key);
 
     if (currentKeyState?.type === "keydown" && currentKeyState?.key == key) {
       return dclass + " " + "border-0 bg-success";

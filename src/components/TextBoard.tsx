@@ -1,5 +1,6 @@
 interface TextBoardProp {}
 
+/* eslint-disable-next-line */
 export default function TextBoard({}: TextBoardProp) {
   return (
     <>

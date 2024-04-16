@@ -1,5 +1,5 @@
 interface TextInputProp {
-  title: String;
+  title: string;
   onChange: () => void;
 }
 
