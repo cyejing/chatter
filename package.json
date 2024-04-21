@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open --mode server' 'cargo run --bin self_server'",
-    "dev-quite": "vite",
-    "build": "tsc && vite build",
+    "dev-tauri": "vite",
+    "build": "tsc && vite build --mode server",
+    "build-tauri": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "deploy": "run-p build && cargo shuttle deploy --allow-dirty",
+    "shuttle-run": "run-p build && cargo shuttle run"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
@@ -29,6 +32,7 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
+    "npm-run-all2": "^6.1.1",
     "daisyui": "^4.10.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",

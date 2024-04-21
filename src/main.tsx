@@ -4,10 +4,14 @@ import App from "./App.tsx";
 import "./index.css";
 import { ContextProvider } from "./utils/store.ts";
 
-console.log(import.meta.env.MODE);
-console.log(import.meta.env.DEV);
-console.log(import.meta.env.PROD);
-console.log(import.meta.env.VITE_RUST_BRIDGE);
+console.log(
+  "run in mode: ",
+  import.meta.env.MODE,
+  "dev: ",
+  import.meta.env.DEV,
+  "prod: ",
+  import.meta.env.PROD,
+);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
