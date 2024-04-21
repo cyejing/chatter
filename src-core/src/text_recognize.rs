@@ -1,23 +1,22 @@
 use std::char;
 
+use log::info;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Default, Deserialize)]
 pub struct RecognizeReq {
     text: String,
     mode: Option<String>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Default, Serialize)]
 pub struct RecognizeResp {
     pub origin: String,
     pub lines: Vec<String>,
     pub line_words: Vec<Vec<String>>,
 }
 
-#[allow(dead_code)]
-#[tauri::command]
 pub fn recognize(req: RecognizeReq) -> RecognizeResp {
     let line_strs: Vec<&str> = req
         .text
@@ -50,6 +49,7 @@ pub fn recognize(req: RecognizeReq) -> RecognizeResp {
         line_words.push(line_word);
     }
 
+    info!("recognize: lines:{}", lines.len());
     RecognizeResp {
         origin: req.text,
         lines,

@@ -1,19 +1,18 @@
 import { useState } from "react";
-import { recognize } from "../utils/RustAgent";
+import { recognize } from "../utils/rust_agent";
+import { useConextStore } from "../utils/store";
 
-interface TextInputProp {
-  title: string;
-  onChange: () => void;
-}
+export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
+  const [text, setText] = useState(
+    "Night gathers, and now my watch begins.It shall not end until my death.I shall take no wife, hold no lands, father no children.I shall wear no crowns and win no glory.I shall live and die at my post.",
+  );
+  const { setTextResp } = useConextStore();
 
-/* eslint-disable-next-line */
-export default function TextInput({ title, onChange }: TextInputProp) {
-  /* eslint-disable-next-line */
-  const [text, setText] = useState("");
-
-  function handleSubmit() {
-    recognize(text).then((m) => console.log(m));
-    onChange();
+  async function handleSubmit() {
+    const tr = await recognize(text);
+    console.log("recognize: ", tr);
+    setTextResp(tr);
+    onSubmit();
   }
 
   return (

@@ -1,16 +1,16 @@
 import { KeyCode } from "./ChatterBoard";
 
 interface KeyBoardProp {
-  keyState?: Array<KeyCode>;
+  keyCode?: KeyCode[];
 }
 
-export default function KeyBoard({ keyState }: KeyBoardProp) {
+export default function KeyBoard({ keyCode }: KeyBoardProp) {
   function kbdClass(key: string, dclass: string) {
-    if (keyState === undefined) {
+    if (keyCode === undefined) {
       return;
     }
 
-    const currentKeyState = keyState.find((k) => k.key == key);
+    const currentKeyState = keyCode.find((k) => k.key == key);
 
     if (currentKeyState?.type === "keydown" && currentKeyState?.key == key) {
       return dclass + " " + "border-0 bg-success";
