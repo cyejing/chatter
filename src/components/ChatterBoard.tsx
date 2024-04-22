@@ -43,8 +43,9 @@ function useKeyListener(onChange: (e: KeyCode) => void): Array<KeyCode> {
 
 function dispatch(e: KeyCode) {
   if (e?.key === "2") {
-    console.log("invoke translate");
-    translate_q("current").then((resp) => console.log("translate resp:", resp));
+    translate_q("current me use up up").then((resp) =>
+      console.log("translate resp:", resp),
+    );
   }
 }
 

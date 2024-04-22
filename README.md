@@ -1,30 +1,25 @@
-# React + TypeScript + Vite
+# Chatter 
+英语阅读，用键盘敲打出翻译, 新的英语阅读方式
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 技术栈
+React + Rust + Tauri + WASM + Axum Server
 
-Currently, two official plugins are available:
+多种运行方式:
+1. 静态页面 + WASM
+2. 服务端模式 + Axum Server
+3. 桌面端 + Tauri
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## 运行必备
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### WASM
+1. `cargo instsall wasm-pack`
+1. `cargo instsall rsw`
 
-- Configure the top-level `parserOptions` property like this:
+### Tauri
+1. `cargo install cargo-tauri`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+### Shuttle
+1. `cargo install cargo-shuttle`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+

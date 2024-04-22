@@ -26,32 +26,41 @@ interface TranslateResp {
 }
 
 export async function translate_q(q: string) {
-  const mode = import.meta.env.VITE_RUST_BRIDGE;
-  if (mode === "server") {
-    const { data } = await axios.post<TranslateResp>("/api/translate", {
-      ...translateReqDefault,
-      q: q,
-    });
-    return data;
-  } else {
+  const mode = import.meta.env.MODE;
+  if (mode == "tauri") {
     return invoke<TranslateResp>("translate", {
       req: {
         ...translateReqDefault,
         q: q,
       },
     });
+  } else if (mode === "server") {
+    const { data } = await axios.post<TranslateResp>("/api/translate", {
+      ...translateReqDefault,
+      q: q,
+    });
+    return data;
+  } else if (import.meta.env.MODE == "wasm") {
+    const wasm = await import("src-wasm");
+    return wasm.translate({
+      ...translateReqDefault,
+      q: q,
+    });
   }
 }
 
 export async function translate(req: TranslateReq) {
-  const mode = import.meta.env.VITE_RUST_BRIDGE;
-  if (mode === "server") {
-    const { data } = await axios.post<TranslateResp>("/api/translate", req);
-    return data;
-  } else {
+  const mode = import.meta.env.MODE;
+  if (mode === "tauri") {
     return invoke<TranslateResp>("translate", {
       req: req,
     });
+  } else if (mode === "server") {
+    const { data } = await axios.post<TranslateResp>("/api/translate", req);
+    return data;
+  } else if (import.meta.env.MODE == "wasm") {
+    const wasm = await import("src-wasm");
+    return wasm.translate(req);
   }
 }
 
@@ -62,19 +71,25 @@ export interface TextResp {
 }
 
 export async function recognize(text: string) {
-  const mode = import.meta.env.VITE_RUST_BRIDGE;
-  if (mode === "server") {
-    const { data } = await axios.post("/api/recognize", {
-      text: text,
-      mode: "no_pun",
-    });
-    return data;
-  } else {
+  const mode = import.meta.env.MODE;
+  if (mode === "tauri") {
     return invoke<TextResp>("recognize", {
       req: {
         text: text,
         mode: "no_pun",
       },
+    });
+  } else if (mode === "server") {
+    const { data } = await axios.post("/api/recognize", {
+      text: text,
+      mode: "no_pun",
+    });
+    return data;
+  } else if (import.meta.env.MODE == "wasm") {
+    const wasm = await import("src-wasm");
+    return wasm.recognize({
+      text: text,
+      mode: "no_pun",
     });
   }
 }

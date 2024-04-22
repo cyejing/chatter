@@ -1,0 +1,22 @@
+[package]
+name = "src-wasm"
+version = "0.1.0"
+authors = ["cyejing <chenyejing@didiglobal.com>"]
+edition = "2018"
+
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+time = {version="0.3",features=["wasm-bindgen"]}
+wasm-bindgen = "0.2.92"
+wasm-bindgen-futures = "0.4.42"
+console_error_panic_hook = { version = "0.1.7" }
+
+gloo-utils = { version = "0.2", features = ["serde"] }
+
+chatter-core= {path="../src-core"}
+

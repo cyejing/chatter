@@ -1,7 +1,5 @@
-use std::{
-    sync::Mutex,
-    time::{Duration, Instant},
-};
+use instant::{Duration, Instant};
+use std::sync::Mutex;
 
 use anyhow::anyhow;
 use log::{error, info};
@@ -38,11 +36,13 @@ fn default_from() -> String {
 }
 
 static CLIENT: Lazy<Client> = Lazy::new(|| {
-    reqwest::ClientBuilder::new()
-        .connect_timeout(Duration::from_secs(3))
-        .timeout(Duration::from_secs(5))
-        .build()
-        .expect("reqwest client build failed")
+    let builder = reqwest::ClientBuilder::new();
+    #[cfg(not(target_arch = "wasm32"))]
+    let builder = builder.connect_timeout(Duration::from_secs(3));
+    #[cfg(not(target_arch = "wasm32"))]
+    let builder = builder.timeout(Duration::from_secs(5));
+
+    builder.build().expect("reqwest client build failed")
 });
 
 static MICROSOFT_TOKEN: Lazy<Mutex<MicrosoftToken>> = Lazy::new(|| {

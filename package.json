@@ -4,15 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open --mode server' 'cargo run --bin self_server'",
-    "dev-tauri": "vite",
-    "build": "tsc && vite build --mode server",
-    "build-tauri": "tsc && vite build",
+    "dev": "concurrently \"rsw watch\" \"vite --open --mode wasm\"",
+    "build": "rsw build && tsc && vite build --mode wasm",
+    "devser": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open --mode server' 'cargo run --bin self_server'",
+    "buildser": "tsc && vite build --mode server",
+    "dev-tauri": "vite --mode tauri",
+    "build-tauri": "tsc && vite build --mode tauri",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "shuttle": "run-p buildser && cargo shuttle ",
     "tauri": "tauri",
-    "deploy": "run-p build && cargo shuttle deploy --allow-dirty",
-    "shuttle-run": "run-p build && cargo shuttle run"
+    "rsw": "rsw"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
@@ -32,14 +34,16 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
-    "npm-run-all2": "^6.1.1",
     "daisyui": "^4.10.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "npm-run-all2": "^6.1.1",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0"
+    "vite": "^5.2.0",
+    "vite-plugin-wasm": "^3.3.0",
+    "vite-plugin-top-level-await": "^1.4.1"
   }
 }

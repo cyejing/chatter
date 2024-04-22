@@ -1,0 +1,22 @@
+name = "rsw"
+version = "0.1.0"
+
+#! time interval for file changes to trigger wasm-pack build, default `50` milliseconds
+interval = 50
+
+cli = "npm"
+
+#! rsw new <name>
+[new]
+using = "wasm-pack"
+dir = "my-template"
+
+#! ################# NPM Package #################
+#! When there is only `name`, other fields will use the default configuration
+[[crates]]
+name = "src-wasm"
+link = true
+target = "bundler"
+
+
+

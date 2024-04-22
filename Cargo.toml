@@ -4,4 +4,5 @@ members = [
     "src-core",
     "src-server",
     "src-tauri",
+    "src-wasm",
 ]
