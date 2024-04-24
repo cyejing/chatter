@@ -4,7 +4,7 @@ import { useConextStore } from "../utils/store";
 
 export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
   const [text, setText] = useState(
-    "Night gathers, and now my watch begins.It shall not end until my death.I shall take no wife, hold no lands, father no children.I shall wear no crowns and win no glory.I shall live and die at my post.",
+    "hello world. Night gathers, and now my watch begins.It shall not end until my death.I shall take no wife, hold no lands, father no children.I shall wear no crowns and win no glory.I shall live and die at my post.",
   );
   const { setTextResp } = useConextStore();
 

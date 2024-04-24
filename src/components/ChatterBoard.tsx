@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import KeyBoard from "./KeyBoard";
 import TextBoard from "./TextBoard";
-import { translate_q } from "../utils/rust_agent";
+import { useConextStore } from "../utils/store";
 
 export interface KeyCode {
   key: string;
@@ -9,8 +9,8 @@ export interface KeyCode {
   type: string;
 }
 
-function useKeyListener(onChange: (e: KeyCode) => void): Array<KeyCode> {
-  const [keyCode, setKeyCode] = useState<Array<KeyCode>>([]);
+function useKeyListener(onChange: (kc: KeyCode) => void): Array<KeyCode> {
+  const [keyCodes, setKeyCode] = useState<Array<KeyCode>>([]);
 
   useEffect(() => {
     function handleKeyboardEvent(e: KeyboardEvent): void {
@@ -38,19 +38,16 @@ function useKeyListener(onChange: (e: KeyCode) => void): Array<KeyCode> {
     };
   }, []);
 
-  return keyCode;
-}
-
-function dispatch(e: KeyCode) {
-  if (e?.key === "2") {
-    translate_q("current me use up up").then((resp) =>
-      console.log("translate resp:", resp),
-    );
-  }
+  return keyCodes;
 }
 
 export default function ChatterBoard({ onBack }: { onBack: () => void }) {
   const keyCodes = useKeyListener(dispatch);
+
+  const { handleKeyCode } = useConextStore();
+  function dispatch(kc: KeyCode) {
+    handleKeyCode(kc);
+  }
 
   return (
     <>
@@ -61,7 +58,7 @@ export default function ChatterBoard({ onBack }: { onBack: () => void }) {
           </button>
         </div>
         <div className="py-4 grow p-2">
-          <TextBoard />
+          <TextBoard></TextBoard>
         </div>
         <div className="py-2 invisible">
           <KeyBoard></KeyBoard>
@@ -70,7 +67,7 @@ export default function ChatterBoard({ onBack }: { onBack: () => void }) {
 
       <div className="fixed bottom-0 left-0 w-screen bg-base-200">
         <div className="container max-w-xl mx-auto py-2">
-          <KeyBoard keyCode={keyCodes} />
+          <KeyBoard keyCodes={keyCodes} />
         </div>
       </div>
     </>

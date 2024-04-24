@@ -1,19 +1,20 @@
 interface TextLineProp {
   children: string;
-  highlight_index?: number;
+  inputText?: string;
 }
-export default function TextLine({ children, highlight_index }: TextLineProp) {
-  let highlight_text = "";
-  let text = children;
-  if (highlight_index && highlight_index > 0) {
-    highlight_text = text.slice(0, highlight_index);
-    text = text.slice(highlight_index);
-  }
+export default function TextLine({ children, inputText }: TextLineProp) {
+  const text = children;
+  const currentLine = inputText != undefined;
+
   return (
-    <p className="text-center">
-      {highlight_text != "" && (
-        <span className="bg-red-400">{highlight_text}</span>
-      )}
+    <p
+      className={
+        currentLine
+          ? "text-center border bg-neutral rounded-md text-neutral-content p-2 text-2xl"
+          : "text-center"
+      }
+    >
+      {currentLine && <span className="text-success">{inputText}</span>}
       {text}
     </p>
   );

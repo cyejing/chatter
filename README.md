@@ -13,8 +13,8 @@ React + Rust + Tauri + WASM + Axum Server
 ## 运行必备
 
 ### WASM
-1. `cargo instsall wasm-pack`
-1. `cargo instsall rsw`
+1. `cargo install wasm-pack`
+1. `cargo install rsw`
 
 ### Tauri
 1. `cargo install cargo-tauri`
