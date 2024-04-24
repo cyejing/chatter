@@ -13,7 +13,25 @@ export default {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light", "dark", "cupcake"], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    themes: [
+      "light",
+      "dark",
+      "cupcake",
+      "nord",
+      {
+        mytheme: {
+          primary: "#ff00ff",
+          secondary: "#008c00",
+          accent: "#00bf00",
+          neutral: "#2d2a2f",
+          "base-100": "#efffef",
+          info: "#5cc2ff",
+          success: "#b0da30",
+          warning: "#ec8b00",
+          error: "#ff054f",
+        },
+      },
+    ], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
     darkTheme: "drak", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
