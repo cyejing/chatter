@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "concurrently \"rsw watch\" \"vite --open --mode wasm\"",
     "build": "rsw build && tsc && vite build --mode wasm",
+    "buildghp": "rsw build && tsc && vite build --mode ghpage",
     "devser": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open --mode server' 'cargo run --bin self_server'",
     "buildser": "tsc && vite build --mode server",
     "dev-tauri": "vite --mode tauri",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.11",
+    "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -43,7 +45,7 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
-    "vite-plugin-wasm": "^3.3.0",
-    "vite-plugin-top-level-await": "^1.4.1"
+    "vite-plugin-top-level-await": "^1.4.1",
+    "vite-plugin-wasm": "^3.3.0"
   }
 }
