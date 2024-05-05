@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "concurrently \"rsw watch\" \"vite --open --mode wasm\"",
     "build": "rsw build && tsc && vite build --mode wasm",
-    "buildghp": "rsw build && tsc && vite build --mode ghpage",
     "devser": "concurrently --names 'vite, server' --kill-others 'vite --host 0.0.0.0 --open --mode server' 'cargo run --bin self_server'",
     "buildser": "tsc && vite build --mode server",
     "dev-tauri": "vite --mode tauri",
     "build-tauri": "tsc && vite build --mode tauri",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "buildghp": "rsw build && tsc && vite build --mode ghpage",
     "shuttle": "run-p buildser && cargo shuttle ",
     "tauri": "tauri",
     "rsw": "rsw"

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import KeyBoard from "./KeyBoard";
 import TextBoard from "./TextBoard";
-import { useConextStore } from "../utils/store";
+import { keyToView, useConextStore } from "../utils/store";
 
 export interface KeyCode {
   key: string;
+  keyView?: string;
   code: string;
   type: string;
 }
@@ -16,6 +17,7 @@ function useKeyListener(onChange: (kc: KeyCode) => void): Array<KeyCode> {
     function handleKeyboardEvent(e: KeyboardEvent): void {
       const kc: KeyCode = {
         key: e.key,
+        keyView: keyToView(e.key),
         code: e.code,
         type: e.type,
       };
@@ -24,7 +26,7 @@ function useKeyListener(onChange: (kc: KeyCode) => void): Array<KeyCode> {
         setKeyCode((ks) => [...ks, kc]);
         onChange(kc);
       } else if (e.type === "keyup") {
-        setKeyCode((ks) => ks.filter((k) => k.key !== e.key));
+        setKeyCode((ks) => ks.filter((k) => k.code !== e.code));
       }
     }
     document.addEventListener("keydown", handleKeyboardEvent);
@@ -58,7 +60,7 @@ export default function ChatterBoard({ onBack }: { onBack: () => void }) {
           </button>
         </div>
         <div className="py-4 grow p-2">
-          <TextBoard></TextBoard>
+          <TextBoard keyCodes={keyCodes}></TextBoard>
         </div>
         <div className="py-2 invisible">
           <KeyBoard></KeyBoard>

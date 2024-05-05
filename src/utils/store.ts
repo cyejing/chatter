@@ -12,6 +12,17 @@ export interface TextContent {
   lineWordIndex: number;
 }
 
+export function keyToView(key?: string) {
+  switch (key) {
+    case " ":
+      return "␣";
+    case "Enter":
+      return "⏎";
+    default:
+      return key;
+  }
+}
+
 export const [useConextStore, ContextProvider] = createStore(() => {
   const [tc, _setTextContent] = useState<TextContent>({
     lineIndex: 0,
@@ -34,9 +45,10 @@ export const [useConextStore, ContextProvider] = createStore(() => {
   }
   function currentLineSlice() {
     const line = currentLine();
-    const inputText = line?.slice(0, tc.lineCharIndex);
-    const waitInputText = line?.slice(tc.lineCharIndex);
-    return [inputText, waitInputText];
+    const cnextChar = keyToView(nextChar());
+    const prevText = line?.slice(0, tc.lineCharIndex);
+    const nextText = line?.slice(tc.lineCharIndex + 1);
+    return [prevText, cnextChar, nextText];
   }
 
   function isLineEnd(): boolean {
