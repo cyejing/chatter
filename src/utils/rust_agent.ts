@@ -40,7 +40,7 @@ export async function translate_q(q: string) {
       q: q,
     });
     return data;
-  } else if (import.meta.env.MODE == "wasm") {
+  } else if (mode == "wasm" || mode == "ghpage") {
     const wasm = await import("src-wasm");
     return wasm.translate({
       ...translateReqDefault,
@@ -58,7 +58,7 @@ export async function translate(req: TranslateReq) {
   } else if (mode === "server") {
     const { data } = await axios.post<TranslateResp>("/api/translate", req);
     return data;
-  } else if (import.meta.env.MODE == "wasm") {
+  } else if (mode == "wasm" || mode == "ghpage") {
     const wasm = await import("src-wasm");
     return wasm.translate(req);
   }
@@ -85,7 +85,7 @@ export async function recognize(text: string) {
       mode: "no_pun",
     });
     return data;
-  } else if (import.meta.env.MODE == "wasm") {
+  } else if (mode == "wasm" || mode == "ghpage") {
     const wasm = await import("src-wasm");
     return wasm.recognize({
       text: text,
