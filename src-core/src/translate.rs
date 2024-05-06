@@ -1,3 +1,6 @@
+#[cfg(target_arch = "wasm32")]
+use instant::Instant;
+#[cfg(not(target_arch = "wasm32"))]
 use instant::{Duration, Instant};
 
 use anyhow::anyhow;
