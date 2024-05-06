@@ -1,5 +1,5 @@
+import { KeyCode } from "../utils/key_listener";
 import { useConextStore } from "../utils/store";
-import { KeyCode } from "./ChatterBoard";
 import TextLine from "./TextLine";
 
 export default function TextBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {

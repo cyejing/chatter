@@ -1,4 +1,4 @@
-import { KeyCode } from "./ChatterBoard";
+import { KeyCode } from "../utils/key_listener";
 
 export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
   function kbdClass(code: string, dclass: string) {

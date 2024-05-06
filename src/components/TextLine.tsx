@@ -1,4 +1,4 @@
-import { KeyCode } from "./ChatterBoard";
+import { KeyCode } from "../utils/key_listener";
 
 interface TextLineProp {
   currentLinePrevText?: string;

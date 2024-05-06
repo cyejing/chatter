@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createStore } from "hox";
 import { TextResp, translate_q } from "./rust_agent";
-import { KeyCode } from "../components/ChatterBoard";
+import { KeyCode } from "./key_listener";
 
 export interface TextContent {
   origin?: string;
