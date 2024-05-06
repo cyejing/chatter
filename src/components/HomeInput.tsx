@@ -37,7 +37,7 @@ export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             className="textarea textarea-bordered resize-none w-full h-full text-lg"
-            placeholder="输入待翻译的文本"
+            placeholder="输入待翻译的文本 ⌃+I"
           ></textarea>
         </div>
         <div className="invisible p-6">
@@ -53,6 +53,8 @@ export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
             onClick={handleSubmit}
           >
             提交
+            <kbd className="kbd kbd-sm">⌃</kbd>
+            <kbd className="kbd kbd-sm">J</kbd>
           </button>
         </div>
       </div>

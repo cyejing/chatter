@@ -20,6 +20,8 @@ export default function ChatterBoard({ onBack }: { onBack: () => void }) {
         <div className="w-2/3 mx-auto pt-2">
           <button className="btn btn-sm btn-block" onClick={onBack}>
             返回
+            <kbd className="kbd kbd-sm">⌃</kbd>
+            <kbd className="kbd kbd-sm">B</kbd>
           </button>
         </div>
         <div className="py-4 grow p-2">
