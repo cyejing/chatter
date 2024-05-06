@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { createStore } from "hox";
 import { TextResp, translate_q } from "./rust_agent";
 import { KeyCode } from "./key_listener";
@@ -10,6 +11,8 @@ export interface TextContent {
   lineIndex: number;
   lineCharIndex: number;
   lineWordIndex: number;
+  preLineIndex: number;
+  preLineWordIndex: number;
 }
 
 export function keyToView(key?: string) {
@@ -28,21 +31,31 @@ export const [useConextStore, ContextProvider] = createStore(() => {
     lineIndex: 0,
     lineCharIndex: 0,
     lineWordIndex: 0,
+    preLineIndex: 0,
+    preLineWordIndex: 0,
   });
 
   function setTextResp(tr: TextResp) {
-    _setTextContent({
+    const tc = {
       ...tr,
       lineWords: tr.line_words,
       lineIndex: 0,
       lineCharIndex: 0,
       lineWordIndex: 0,
-    });
+      preLineIndex: 0,
+      preLineWordIndex: 0,
+    };
+    _setTextContent(tc);
+
+    for (let i = 0; i < 5; i++) {
+      preTranslate(tc);
+    }
   }
 
   function currentLine() {
     return tc.lines && tc.lines[tc.lineIndex];
   }
+
   function currentLineSlice() {
     const line = currentLine();
     const cnextChar = keyToView(nextChar());
@@ -67,14 +80,12 @@ export const [useConextStore, ContextProvider] = createStore(() => {
 
   function addChar() {
     const line = currentLine();
-    if (nextChar() === " ") {
-      addWord();
-    }
+
     const nextLineCharIndex = tc.lineCharIndex + 1;
     if (line && nextLineCharIndex > line.length) {
       // nextLine
       const nextLineIndex = tc.lineIndex + 1;
-      if (tc.lines && nextLineIndex > tc.lines.length) {
+      if (tc.lines && nextLineIndex >= tc.lines.length) {
         // end
         return;
       } else {
@@ -84,13 +95,13 @@ export const [useConextStore, ContextProvider] = createStore(() => {
         tc.lineWordIndex = 0;
       }
     } else {
+      if (nextChar() === " ") {
+        // addWord
+        tc.lineWordIndex += 1;
+      }
       //nextChar
       tc.lineCharIndex = nextLineCharIndex;
     }
-  }
-
-  function addWord() {
-    tc.lineWordIndex += 1;
   }
 
   function currentWord() {
@@ -101,14 +112,48 @@ export const [useConextStore, ContextProvider] = createStore(() => {
     if (kc.key == nextChar() || kc.code === "Escape") {
       addChar();
 
-      if (nextChar() === " " || isLineEnd()) {
+      if (nextChar() === " ") {
         const word = currentWord();
         if (word) {
           translate_q(word).then((resp) => {
-            console.log("translate resp:", resp);
+            console.info("handle translateWord:", resp);
           });
+          preTranslate(tc);
         }
       }
+      if (isLineEnd()) {
+        console.log("handle translateLine");
+      }
+    }
+  }
+
+  function preTranslate(tc: TextContent) {
+    if (tc.lineWords) {
+      if (tc.preLineIndex === 0 && tc.preLineWordIndex === 0) {
+        const q = tc.lineWords[tc.preLineIndex][tc.preLineWordIndex];
+        translate_q(q);
+      }
+
+      const currentPreLine = tc.lineWords[tc.preLineIndex];
+
+      const nextPreLineWordIndex = tc.preLineWordIndex + 1;
+      if (currentPreLine && nextPreLineWordIndex >= currentPreLine.length) {
+        const nextLineIndex = tc.preLineIndex + 1;
+        if (tc.lines && nextLineIndex >= tc.lines.length) {
+          // end
+          return;
+        } else {
+          // nextLine
+          tc.preLineIndex = nextLineIndex;
+          tc.preLineWordIndex = 0;
+        }
+      } else {
+        // nextWord
+        tc.preLineWordIndex = nextPreLineWordIndex;
+      }
+
+      const q = tc.lineWords[tc.preLineIndex][tc.preLineWordIndex];
+      translate_q(q);
     }
   }
 

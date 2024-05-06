@@ -16,6 +16,7 @@ regex= "1.10"
 
 instant = { version = "0.1", features = [ "wasm-bindgen" ] }
 cached = {version="0.45",features=["proc_macro","async"]}
+tokio = {version="1.28.2", features= ["sync"] }
 
 [dev-dependencies]
 

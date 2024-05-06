@@ -26,6 +26,10 @@ interface TranslateResp {
 }
 
 export async function translate_q(q: string) {
+  if (!q) {
+    console.error("translate q is undefined!!!");
+    return;
+  }
   const mode = import.meta.env.MODE;
   if (mode == "tauri") {
     return invoke<TranslateResp>("translate", {

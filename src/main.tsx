@@ -13,7 +13,7 @@ console.log(
   import.meta.env.PROD,
 );
 
-if (import.meta.env.MODE == "wasm",import.meta.env.MODE == "ghpage") {
+if (import.meta.env.MODE == "wasm" || import.meta.env.MODE == "ghpage") {
   import("src-wasm").then((w) => w.wasm_init());
 }
 

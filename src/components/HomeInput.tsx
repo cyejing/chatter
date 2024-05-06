@@ -9,7 +9,7 @@ export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
   );
   const { setTextResp } = useConextStore();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const submitButtonRef = useRef<HTMLTextAreaElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   async function handleSubmit() {
     const tr = await recognize(text);

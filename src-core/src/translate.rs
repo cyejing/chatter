@@ -1,9 +1,8 @@
 use instant::{Duration, Instant};
-use std::sync::Mutex;
 
 use anyhow::anyhow;
 use cached::proc_macro::cached;
-use log::{error, info};
+use log::{debug, error, info};
 use once_cell::sync::Lazy;
 use reqwest::{
     header::{self, HeaderValue},
@@ -11,6 +10,7 @@ use reqwest::{
 };
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
+use tokio::sync::Mutex;
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct TranslateReq {
@@ -69,7 +69,7 @@ struct MicrosoftToken {
     convert = r##"{ format!("{}{}{}",req.q, req.to, req.from) }"##
 )]
 pub async fn translate(req: TranslateReq) -> Result<TranslateResp, String> {
-    info!("translate req:{req:?}");
+    debug!("translate req:{req:?}");
     let ret = match req.provider.as_str() {
         "google" => google_translate(req).await,
         "googleb" => google_translate_back(req).await,
@@ -89,18 +89,19 @@ pub async fn translate(req: TranslateReq) -> Result<TranslateResp, String> {
 }
 
 async fn microsoft_translate(req: TranslateReq) -> anyhow::Result<TranslateResp> {
-    let mut last_token = MICROSOFT_TOKEN.lock().unwrap().clone();
-    if last_token.token.is_empty() || last_token.apply_at.elapsed().as_secs() > 60 * 9 {
-        last_token = if let Some(new_token) = microsoft_apply_token().await {
-            info!("apply new_token");
-            let mut token_guard = MICROSOFT_TOKEN.lock().unwrap();
-            *token_guard = new_token.clone();
-            new_token
-        } else {
-            return Err(anyhow!("microsoft apply token failed"));
-        };
-    }
-    let token = last_token.token;
+    let token = {
+        let mut last_token = MICROSOFT_TOKEN.lock().await;
+        if last_token.token.is_empty() || last_token.apply_at.elapsed().as_secs() > 60 * 9 {
+            if let Some(new_token) = microsoft_apply_token().await {
+                info!("apply new_token");
+                // let mut token_guard = MICROSOFT_TOKEN.lock().unwrap();
+                *last_token = new_token.clone();
+            } else {
+                return Err(anyhow!("microsoft apply token failed"));
+            };
+        }
+        last_token.token.clone()
+    };
     let body: Value = CLIENT
         .post("https://api-edge.cognitive.microsofttranslator.com/translate")
         .query(&[("to", req.to.as_str()), ("api-version", "3.0")])
@@ -116,7 +117,7 @@ async fn microsoft_translate(req: TranslateReq) -> anyhow::Result<TranslateResp>
         .await?
         .json()
         .await?;
-    info!("microsoft translate body: {body}");
+    debug!("microsoft translate body: {body}");
 
     let text = body
         .get(0)
@@ -190,7 +191,7 @@ async fn google_translate(req: TranslateReq) -> anyhow::Result<TranslateResp> {
         .json()
         .await?;
 
-    info!("google translate body: {body}");
+    debug!("google translate body: {body}");
 
     let trans = body
         .get(0)
@@ -270,7 +271,7 @@ async fn google_translate_back(req: TranslateReq) -> anyhow::Result<TranslateRes
         .json()
         .await?;
 
-    info!("google_back translate body: {body}");
+    debug!("google_back translate body: {body}");
 
     let trans = body
         .get(0)

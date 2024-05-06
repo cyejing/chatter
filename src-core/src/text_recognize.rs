@@ -45,7 +45,7 @@ pub fn recognize(req: RecognizeReq) -> RecognizeResp {
             .map(|s| s.to_string())
             .collect();
 
-        lines.push(line.to_string());
+        lines.push(format!("{line} "));
         line_words.push(line_word);
     }
 
