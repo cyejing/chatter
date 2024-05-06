@@ -38,7 +38,7 @@ export default function TextLine({
         {currentLine && (
           <span className="text-success">{currentLinePrevText}</span>
         )}
-        <span className="text-error">{nextChar}</span>
+        <span className="text-secondary">{nextChar}</span>
         {text}
       </p>
     );
