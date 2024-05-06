@@ -6,6 +6,7 @@ use chatter_core::{
     translate::{self, TranslateReq, TranslateResp},
 };
 use time::macros::{format_description, offset};
+use tracing::Level;
 use tracing_subscriber::fmt::time::OffsetTime;
 
 fn main() {
@@ -34,5 +35,6 @@ pub fn init_log() {
     tracing_subscriber::fmt()
         .with_target(false)
         .with_timer(timer)
+        .with_max_level(Level::INFO)
         .init();
 }

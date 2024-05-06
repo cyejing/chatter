@@ -1,4 +1,5 @@
 use time::macros::{format_description, offset};
+use tracing::Level;
 use tracing_subscriber::fmt::time::OffsetTime;
 
 pub mod router;
@@ -12,5 +13,6 @@ pub fn init_log() {
     tracing_subscriber::fmt()
         .with_target(false)
         .with_timer(timer)
+        .with_max_level(Level::INFO)
         .init();
 }
