@@ -9,12 +9,11 @@ export interface KeyCode {
   ctrlKey: boolean;
   metaKey: boolean;
   altKey: boolean;
-  preventDefault: () => void;
-  stopPropagation: () => void;
 }
 
 export function useKeyListener(
   onChange: (kc: KeyCode) => void,
+  preventCodes?: string[],
 ): Array<KeyCode> {
   const [keyCodes, setKeyCode] = useState<Array<KeyCode>>([]);
 
@@ -28,12 +27,15 @@ export function useKeyListener(
         ctrlKey: e.ctrlKey,
         metaKey: e.metaKey,
         altKey: e.altKey,
-        preventDefault: e.preventDefault,
-        stopPropagation: e.stopPropagation,
       };
 
       if (e.type === "keydown") {
         setKeyCode((ks) => [...ks, kc]);
+
+        if (preventCodes?.includes(e.code)) {
+          e.preventDefault();
+        }
+
         onChange(kc);
       } else if (e.type === "keyup") {
         setKeyCode((ks) => ks.filter((k) => k.code !== e.code));

@@ -4,16 +4,13 @@ import { useConextStore } from "../utils/store";
 import { KeyCode, useKeyListener } from "../utils/key_listener";
 
 export default function ChatterBoard({ onBack }: { onBack: () => void }) {
-  const keyCodes = useKeyListener(dispatch);
+  const keyCodes = useKeyListener(dispatch, ["Tab"]);
 
   const { handleKeyCode } = useConextStore();
   function dispatch(kc: KeyCode) {
     handleKeyCode(kc);
     if (kc.code === "KeyB" && kc.ctrlKey) {
       onBack();
-    }
-    if (kc.code === "Tab") {
-      kc.preventDefault();
     }
   }
 
