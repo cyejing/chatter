@@ -2,6 +2,7 @@ use instant::{Duration, Instant};
 use std::sync::Mutex;
 
 use anyhow::anyhow;
+use cached::proc_macro::cached;
 use log::{error, info};
 use once_cell::sync::Lazy;
 use reqwest::{
@@ -20,7 +21,7 @@ pub struct TranslateReq {
     from: String,
 }
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Debug, Clone, Default, Serialize)]
 pub struct TranslateResp {
     provider: String,
     q: String,
@@ -60,6 +61,13 @@ struct MicrosoftToken {
     apply_at: Instant,
 }
 
+#[cached(
+    time = 300,
+    size = 3000,
+    result = true,
+    key = "String",
+    convert = r##"{ format!("{}{}{}",req.q, req.to, req.from) }"##
+)]
 pub async fn translate(req: TranslateReq) -> Result<TranslateResp, String> {
     info!("translate req:{req:?}");
     let ret = match req.provider.as_str() {

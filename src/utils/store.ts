@@ -67,8 +67,12 @@ export const [useConextStore, ContextProvider] = createStore(() => {
 
   function addChar() {
     const line = currentLine();
+    if (nextChar() === " ") {
+      addWord();
+    }
     const nextLineCharIndex = tc.lineCharIndex + 1;
     if (line && nextLineCharIndex > line.length) {
+      // nextLine
       const nextLineIndex = tc.lineIndex + 1;
       if (tc.lines && nextLineIndex > tc.lines.length) {
         // end
@@ -94,11 +98,7 @@ export const [useConextStore, ContextProvider] = createStore(() => {
   }
 
   function handleKeyCode(kc: KeyCode) {
-    if (kc.key == nextChar()) {
-      if (kc.key === " ") {
-        addWord();
-      }
-
+    if (kc.key == nextChar() || kc.code === "Escape") {
       addChar();
 
       if (nextChar() === " " || isLineEnd()) {

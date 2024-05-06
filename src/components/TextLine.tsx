@@ -25,7 +25,7 @@ export default function TextLine({
   }
 
   if (prevLine) {
-    return <p className="text-center text-success">{text}</p>;
+    return <p className="text-center">{text}</p>;
   } else {
     return (
       <p
