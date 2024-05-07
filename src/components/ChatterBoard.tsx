@@ -33,9 +33,7 @@ export default function ChatterBoard({ onBack }: { onBack: () => void }) {
       </main>
 
       <div className="fixed bottom-0 left-0 w-screen bg-base-200">
-        <div className="container max-w-xl mx-auto py-2">
-          <KeyBoard keyCodes={keyCodes} />
-        </div>
+        <KeyBoard keyCodes={keyCodes} />
       </div>
     </>
   );

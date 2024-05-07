@@ -56,13 +56,13 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 800,
         "resizable": true,
         "center": true,
         "title": "chatter-react",
         "width": 800,
-        "minWidth": 600,
-        "minHeight": 600
+        "height": 800,
+        "minWidth": 640,
+        "minHeight": 640
       }
     ]
   }
