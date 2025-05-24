@@ -15,7 +15,7 @@
     "check": "run-p tycheck lint",
     "preview": "vite preview",
     "buildghp": "rsw build && tsc && vite build --mode ghpage",
-    "shuttle": "run-p buildser && cargo shuttle ",
+    "shuttle": "run-p buildser && cargo shuttle run",
     "tauri": "tauri",
     "rsw": "rsw"
   },

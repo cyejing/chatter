@@ -30,7 +30,7 @@ React + Rust + Tauri + WASM + Axum Server
 1. 服务端模式
 `pnpm run devser`
 2. tauri模式
-`pnpm run dev-tauri`
+`pnpm run tauri dev`
 2. wasm模式
 `pnpm run dev`
 
