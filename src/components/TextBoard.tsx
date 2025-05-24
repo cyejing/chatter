@@ -1,4 +1,4 @@
-import { KeyCode } from "../utils/key_listener";
+import { type KeyCode } from "../utils/key_listener";
 import { useConextStore } from "../utils/store";
 import TextLine from "./TextLine";
 

@@ -1,7 +1,7 @@
 import KeyBoard from "./KeyBoard";
 import TextBoard from "./TextBoard";
 import { useConextStore } from "../utils/store";
-import { KeyCode, useKeyListener } from "../utils/key_listener";
+import { type KeyCode, useKeyListener } from "../utils/key_listener";
 
 export default function ChatterBoard({ onBack }: { onBack: () => void }) {
   const keyCodes = useKeyListener(dispatch, ["Tab"]);
@@ -16,23 +16,23 @@ export default function ChatterBoard({ onBack }: { onBack: () => void }) {
 
   return (
     <>
-      <main className="container mx-auto h-screen flex flex-col">
-        <div className="w-2/3 mx-auto pt-2">
+      <main className="container mx-auto flex h-screen flex-col">
+        <div className="mx-auto w-2/3 pt-2">
           <button className="btn btn-sm btn-block" onClick={onBack}>
             返回
             <kbd className="kbd kbd-sm">⌃</kbd>
             <kbd className="kbd kbd-sm">B</kbd>
           </button>
         </div>
-        <div className="py-4 grow p-2">
+        <div className="grow p-2 py-4">
           <TextBoard keyCodes={keyCodes}></TextBoard>
         </div>
-        <div className="py-2 invisible">
+        <div className="invisible py-2">
           <KeyBoard></KeyBoard>
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 w-screen bg-base-200">
+      <div className="bg-base-200 fixed bottom-0 left-0 w-screen">
         <KeyBoard keyCodes={keyCodes} />
       </div>
     </>

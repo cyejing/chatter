@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <div className="w-screen">
+      <div className="w-screen" data-theme="nord">
         {homeState === "home" && <HomeInput onSubmit={homeSubmit} />}
         {homeState === "board" && <ChatterBoard onBack={boardBack} />}
       </div>

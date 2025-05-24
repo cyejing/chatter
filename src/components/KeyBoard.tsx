@@ -1,4 +1,4 @@
-import { KeyCode } from "../utils/key_listener";
+import { type KeyCode } from "../utils/key_listener";
 
 export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
   function kbdClass(code: string, dclass: string) {
@@ -8,11 +8,7 @@ export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
 
     const currentKeyState = keyCodes.find((k) => k.code == code);
 
-    if (
-      currentKeyState &&
-      currentKeyState.type === "keydown" &&
-      currentKeyState.code == code
-    ) {
+    if (currentKeyState && currentKeyState.type === "keydown" && currentKeyState.code == code) {
       return dclass + " kbd kbd-sm sm:kbd-md flex-auto border-0 bg-success";
     } else {
       return dclass + " kbd kbd-sm sm:kbd-md flex-auto";
@@ -20,8 +16,8 @@ export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
   }
 
   return (
-    <div className="container max-w-md sm:max-w-xl mx-auto py-2">
-      <div className="flex justify-center gap-1 my-1 w-ful">
+    <div className="container mx-auto max-w-md py-2 sm:max-w-xl">
+      <div className="w-ful my-1 flex justify-center gap-1">
         <kbd className={kbdClass("Escape", "w-10")}>⎋</kbd>
         <kbd className={kbdClass("Digit1", "w-9")}>1</kbd>
         <kbd className={kbdClass("Digit2", "w-9")}>2</kbd>
@@ -37,7 +33,7 @@ export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
         <kbd className={kbdClass("Equal", "w-9")}>=</kbd>
         <kbd className={kbdClass("Backspace", "w-20")}>⌫</kbd>
       </div>
-      <div className="flex justify-center gap-1 my-1 w-ful">
+      <div className="w-ful my-1 flex justify-center gap-1">
         <kbd className={kbdClass("Tab", "w-14")}>⇥</kbd>
         <kbd className={kbdClass("KeyQ", "w-9")}>q</kbd>
         <kbd className={kbdClass("KeyW", "w-9")}>w</kbd>
@@ -53,7 +49,7 @@ export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
         <kbd className={kbdClass("BracketRight", "w-9")}>]</kbd>
         <kbd className={kbdClass("Backslash", "w-10")}>\</kbd>
       </div>
-      <div className="flex justify-center gap-1 my-1 w-ful">
+      <div className="w-ful my-1 flex justify-center gap-1">
         <kbd className={kbdClass("CapsLock", "w-16")}>⇪</kbd>
         <kbd className={kbdClass("KeyA", "w-9")}>a</kbd>
         <kbd className={kbdClass("KeyS", "w-9")}>s</kbd>
@@ -68,7 +64,7 @@ export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
         <kbd className={kbdClass("Quote", "w-9")}>'</kbd>
         <kbd className={kbdClass("Enter", "w-20")}>⏎</kbd>
       </div>
-      <div className="flex justify-center gap-1 my-1 w-ful">
+      <div className="w-ful my-1 flex justify-center gap-1">
         <kbd className={kbdClass("ShiftLeft", "w-20")}>⇧</kbd>
         <kbd className={kbdClass("KeyZ", "w-9")}>z</kbd>
         <kbd className={kbdClass("KeyX", "w-9")}>x</kbd>
@@ -84,7 +80,7 @@ export default function KeyBoard({ keyCodes }: { keyCodes?: KeyCode[] }) {
         <kbd className={kbdClass("ArrowUp", "w-9")}>▲</kbd>
         <kbd className={kbdClass("Delete", "w-9")}>⌦</kbd>
       </div>
-      <div className="flex justify-center gap-1 my-1 w-ful">
+      <div className="w-ful my-1 flex justify-center gap-1">
         <kbd className={kbdClass("ControlLeft", "w-12")}>⌃</kbd>
         <kbd className={kbdClass("AltLeft", "w-12")}>⌥</kbd>
         <kbd className={kbdClass("MetaLeft", "w-12")}>⌘</kbd>

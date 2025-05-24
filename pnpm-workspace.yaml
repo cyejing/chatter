@@ -1,0 +1,5 @@
+overrides:
+  src-wasm: link:src-wasm/pkg
+
+ignoredBuiltDependencies:
+  - unrs-resolver

@@ -22,4 +22,16 @@ React + Rust + Tauri + WASM + Axum Server
 ### Shuttle
 1. `cargo install cargo-shuttle`
 
+### 构建wasm pack
+`pnpm run rsw build`
+
+## 开发
+
+1. 服务端模式
+`pnpm run devser`
+2. tauri模式
+`pnpm run dev-tauri`
+2. wasm模式
+`pnpm run dev`
+
 

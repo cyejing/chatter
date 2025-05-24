@@ -4,7 +4,7 @@ version = "0.1.0"
 #! time interval for file changes to trigger wasm-pack build, default `50` milliseconds
 interval = 50
 
-cli = "npm"
+cli = "pnpm"
 
 #! rsw new <name>
 [new]

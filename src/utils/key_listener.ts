@@ -50,6 +50,7 @@ export function useKeyListener(
       document.removeEventListener("keyup", handleKeyboardEvent);
       console.log("the component is now unmounted");
     };
+    // eslint-disable-next-line
   }, []);
 
   return keyCodes;

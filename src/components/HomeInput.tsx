@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { recognize } from "../utils/rust_agent";
 import { useConextStore } from "../utils/store";
-import { KeyCode, useKeyListener } from "../utils/key_listener";
+import { type KeyCode, useKeyListener } from "../utils/key_listener";
 
 export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
   const [text, setText] = useState(
@@ -18,6 +18,7 @@ export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
   }
 
   const _keyCodes = useKeyListener(dispatch);
+
   function dispatch(kc: KeyCode) {
     if (kc.code === "KeyJ" && kc.ctrlKey) {
       textareaRef.current?.blur();
@@ -30,13 +31,13 @@ export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
 
   return (
     <>
-      <main className="container mx-auto h-screen flex flex-col">
+      <main className="container mx-auto flex h-screen flex-col">
         <div className="grow p-6">
           <textarea
             ref={textareaRef}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="textarea textarea-bordered resize-none w-full h-full text-lg"
+            className="textarea textarea-bordered h-full w-full resize-none text-lg"
             placeholder="输入待翻译的文本 ⌃+I"
           ></textarea>
         </div>
@@ -45,8 +46,8 @@ export default function TextInput({ onSubmit }: { onSubmit: () => void }) {
         </div>
       </main>
 
-      <div className="absolute bottom-0 left-0 w-screen bg-base-200">
-        <div className="container mx-auto p-6 flex justify-end">
+      <div className="bg-base-200 absolute bottom-0 left-0 w-screen">
+        <div className="container mx-auto flex justify-end p-6">
           <button
             ref={submitButtonRef}
             className="btn btn-primary btn-md btn-block"
